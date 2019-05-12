@@ -1,0 +1,8 @@
+mat-card {
+  max-width: 280px;
+  text-align: center;
+}
+
+#login-container {
+  min-height: 80vh;
+}

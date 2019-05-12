@@ -1,0 +1,47 @@
+<div id="register-container"
+     fxLayout="column"
+     fxLayoutAlign="center center">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form"
+            (ngSubmit)="register()">
+
+        <p class="mat-h2">Create an Account</p>
+
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input id="register-email"
+                   matInput
+                   formControlName="email"
+                   placeholder="you@email"
+                   type="email">
+            <mat-icon matSuffix>email</mat-icon>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" hintLabel="Must be 10-32 characters">
+            <mat-label>Password</mat-label>
+            <input id="register-password"
+                   matInput
+                   formControlName="password"
+                   placeholder="******"
+                   type="password">
+            <mat-icon matSuffix>vpn_key</mat-icon>
+            <mat-hint align="end">{{ form.value.password?.length || 0 }}</mat-hint>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <button id="register-submit"
+                  type="submit"
+                  mat-button
+                  [disabled]="form.invalid">
+            Register
+          </button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

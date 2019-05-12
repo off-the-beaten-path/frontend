@@ -1,0 +1,44 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <h2>Menu</h2>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-nav-list>
+
+  <h2 matSubheader>Actions</h2>
+
+  <a mat-list-item routerLink="/" style="height: 0;"></a>
+
+  <a mat-list-item
+     routerLink="/"
+     (click)="toggleSidenav.emit()">
+    <mat-icon matListIcon>home</mat-icon>
+    Home
+  </a>
+
+  <a mat-list-item
+     [routerLink]="['auth', 'login']"
+     (click)="toggleSidenav.emit()">
+    <mat-icon matListIcon>person</mat-icon>
+    Login
+  </a>
+
+  <a mat-list-item
+     [routerLink]="['auth', 'register']"
+     (click)="toggleSidenav.emit()">
+    <mat-icon matListIcon>person_add</mat-icon>
+    Register
+  </a>
+
+  <mat-divider></mat-divider>
+
+  <a mat-list-item
+     target="_blank"
+     href="https://github.com/off-the-beaten-path"
+     (click)="toggleSidenav.emit()">
+    <mat-icon matListIcon>cake</mat-icon>
+    Github
+  </a>
+
+</mat-nav-list>
