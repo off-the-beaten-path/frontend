@@ -1,7 +1,5 @@
-export class EasyPagination <T> {
-    constructor(
-	public data: T[],
-	public pageNumber: number,
-	public lastPage: boolean
-    ) {}
+export interface EasyPagination<T> {
+  items: T[];
+  page: number;
+  has_next: boolean;
 }

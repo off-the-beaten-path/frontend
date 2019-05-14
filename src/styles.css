@@ -19,3 +19,7 @@ app-root {
 .toast-top-center {
   top: 12px;
 }
+
+mat-card {
+  margin: 2rem;
+}

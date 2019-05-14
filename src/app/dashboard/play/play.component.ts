@@ -1,0 +1,125 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { GeolocationService } from '../../services/geolocation.service';
+import { GeoCacheService } from '../../services/api/geocache.service';
+import { SettingsService } from '../../services/settings.service';
+
+import { Directions, IGeoCache, ILatLngPosition } from '../../models';
+
+import { Subscription, of, zip } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-play',
+  templateUrl: './play.component.html',
+  styleUrls: ['./play.component.css']
+})
+export class PlayComponent implements OnInit, OnDestroy {
+
+  public directions: Directions = null;
+  public target: IGeoCache = null;
+
+  public closeEnough = false;
+
+  private automaticUpdateSubscription: null | Subscription = null;
+  private doAutomaticUpdateSubscription: null | Subscription = null;
+
+  constructor(private locationService: GeolocationService,
+              private geoCacheService: GeoCacheService,
+              private settings: SettingsService) {
+  }
+
+  public ngOnInit() {
+    this.locationService
+      .getCurrentPosition()
+      .pipe(
+        switchMap(
+          position => {
+            return zip(
+              this.geoCacheService
+                .get(position),
+              of(position)
+            );
+          }
+        )
+      )
+      .subscribe(
+        ([target, position]: [IGeoCache, ILatLngPosition]) => {
+          this.target = target;
+
+          this.updateDirections(position);
+
+          this.automaticUpdate();
+        },
+        error => {
+          console.log('DirectionsComponent', error);
+        }
+      );
+  }
+
+  public updateDirections(updatedPosition: ILatLngPosition): void {
+    this.directions = new Directions(
+      updatedPosition,
+      this.target.location
+    );
+
+    if (this.directions.distance < 50) {
+      console.log('DirectionsComponent', 'Within reach!');
+
+      if (false === this.closeEnough) {
+        this.closeEnough = true;
+      }
+    } else {
+      this.closeEnough = false;
+    }
+  }
+
+  public ngOnDestroy() {
+    if (null !== this.automaticUpdateSubscription) {
+      this.automaticUpdateSubscription.unsubscribe();
+      this.locationService.stopWatching();
+    }
+
+    if (null !== this.doAutomaticUpdateSubscription) {
+      this.doAutomaticUpdateSubscription.unsubscribe();
+    }
+  }
+
+  public onManualUpdate() {
+    this.locationService
+      .getCurrentPosition()
+      .subscribe(
+        value => this.updateDirections(value),
+        error => {
+          console.log('DirectionsComponent', error);
+        }
+      );
+  }
+
+  public automaticUpdate() {
+    this.doAutomaticUpdateSubscription = this.settings
+      .doConstantUpdateEvents
+      .subscribe(
+        value => {
+          if (value) {
+            if (null !== this.automaticUpdateSubscription) {
+              this.automaticUpdateSubscription.unsubscribe();
+              this.locationService.stopWatching();
+            }
+
+            this.automaticUpdateSubscription = this.locationService
+              .watchPosition()
+              .subscribe(
+                position => this.updateDirections(position)
+              );
+          } else {
+            if (null !== this.automaticUpdateSubscription) {
+              this.automaticUpdateSubscription.unsubscribe();
+              this.automaticUpdateSubscription = null;
+              this.locationService.stopWatching();
+            }
+          }
+        }
+      );
+  }
+}

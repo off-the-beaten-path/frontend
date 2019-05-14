@@ -1,6 +1,4 @@
-export class LatLngPosition {
-    constructor(
-	public lat: number,
-	public lng: number
-    ) {}
+export interface ILatLngPosition {
+  lat: number;
+  lng: number;
 }

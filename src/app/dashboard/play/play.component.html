@@ -1,0 +1,44 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="center center">
+  <span>You're On Your Way</span>
+</mat-toolbar>
+
+<div *ngIf="directions; else loader" class="container">
+  <mat-card>
+    <mat-card-header>
+    </mat-card-header>
+    <app-compass [rotation]="directions.compass"></app-compass>
+    <mat-card-content>
+      <div>
+        <p>
+          Distance: {{ directions.distance | number:'1.1-1' }} meters
+        </p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <a *ngIf="closeEnough; else updateButton" [routerLink]="['/bulletin', target.key]" class="example-spacer animated swing" mat-button>
+        Bulletin
+      </a>
+      <ng-template #updateButton>
+        <button  (click)="onManualUpdate()" class="example-spacer animated swing" mat-button>
+          Update
+        </button>
+      </ng-template>
+      <button class="example-spacer" (click)="onOpenSettings()" mat-button>Settings and Help</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<ng-template #loader>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Loading
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        <strong>Note:</strong> You must allow location access for this website to work properly.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
