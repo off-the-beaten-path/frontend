@@ -1,21 +1,19 @@
-
 <mat-card *ngFor="let checkin of history">
   <mat-card-header>
+    <div mat-card-avatar class="header-image"></div>
     <mat-card-title>{{ checkin.geocache.location.lat }}, {{ checkin.geocache.location.lng}}</mat-card-title>
     <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
   </mat-card-header>
+
+  <app-secure-image *ngIf="null !== checkin.image"
+                    [image]="checkin.image"></app-secure-image>
   <mat-card-content>
-    <img *ngIf="checkin.image"
-         [src]="checkin.image.filename">
-
-    <mat-divider></mat-divider>
-
     <p>
       {{ checkin.text }}
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <a [routerLink]="['.', checkin.id]" mat-button>View</a>
+    <a [routerLink]="['.', checkin.id]" mat-button>More Information</a>
   </mat-card-actions>
 </mat-card>
 
