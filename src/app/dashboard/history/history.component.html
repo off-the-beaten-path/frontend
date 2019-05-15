@@ -1,15 +1,14 @@
-
 <mat-card *ngFor="let checkin of history">
   <mat-card-header>
+    <div mat-card-avatar class="header-image"></div>
     <mat-card-title>{{ checkin.geocache.location.lat }}, {{ checkin.geocache.location.lng}}</mat-card-title>
     <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
   </mat-card-header>
+
+  <app-secure-image *ngIf="checkin.image"
+                    mat-card-image
+                    [image]="checkin.image"></app-secure-image>
   <mat-card-content>
-    <img *ngIf="checkin.image"
-         [src]="checkin.image.filename">
-
-    <mat-divider></mat-divider>
-
     <p>
       {{ checkin.text }}
     </p>
