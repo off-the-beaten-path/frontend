@@ -5,8 +5,7 @@
     <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
   </mat-card-header>
 
-  <app-secure-image *ngIf="checkin.image"
-                    mat-card-image
+  <app-secure-image *ngIf="null !== checkin.image"
                     [image]="checkin.image"></app-secure-image>
   <mat-card-content>
     <p>
@@ -14,7 +13,7 @@
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <a [routerLink]="['.', checkin.id]" mat-button>View</a>
+    <a [routerLink]="['.', checkin.id]" mat-button>More Information</a>
   </mat-card-actions>
 </mat-card>
 

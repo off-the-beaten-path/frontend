@@ -3,7 +3,7 @@ import {IImage} from '../../models';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {map} from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
