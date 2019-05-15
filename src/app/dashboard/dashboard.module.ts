@@ -9,9 +9,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { PlayComponent } from './play/play.component';
 import { CompassComponent } from './compass/compass.component';
+import { HistoryComponent } from './history/history.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
-  declarations: [MainComponent, PlayComponent, CompassComponent],
+  declarations: [MainComponent, PlayComponent, CompassComponent, HistoryComponent, SettingsComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      Settings and Help
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <section>
+
+      <h4>Options</h4>
+
+      <mat-slide-toggle
+        *ngIf="doConstantUpdates !== null"
+        (change)="toggleDoConstantUpdates()"
+        [checked]="doConstantUpdates"
+        color="primary">
+        Update in Background?
+      </mat-slide-toggle>
+      <p>
+        (Note: consumes more battery)
+      </p>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section>
+
+      <h4>Help</h4>
+
+      <p>
+        The destination resets every day at midnight EST.
+      </p>
+      <p>
+        We do not store your location data. This project is licensed GPLv3+. This means you have the right to view the
+        source code, modify the source code, run your modified source code, and distribute the original code and your
+        modifications freely. Check out the <a href="https://github.com/off-the-beaten-path">Github</a> for
+        more information.
+      </p>
+    </section>
+  </mat-card-content>
+</mat-card>
+
