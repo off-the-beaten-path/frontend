@@ -7,8 +7,12 @@
     <mat-tab label="List">
       <mat-card *ngFor="let checkin of history">
         <mat-card-header>
-          <div mat-card-avatar class="header-image"></div>
-          <mat-card-title>{{ checkin.geocache.location.lat }}, {{ checkin.geocache.location.lng}}</mat-card-title>
+          <div mat-card-avatar>
+            <svg width="40" height="40" [identiconHash]="checkin.geocache.location.geohash"></svg>
+          </div>
+          <mat-card-title>
+            #{{ checkin.geocache.location.geohash }}
+          </mat-card-title>
           <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
         </mat-card-header>
 

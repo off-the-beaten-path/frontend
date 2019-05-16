@@ -18,6 +18,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { SecureImageComponent } from './secure-image/secure-image.component';
 import { CheckinComponent } from './checkin/checkin.component';
 
+import { IdenticonHashDirective } from './identicon/identicon-hash.directive';
+
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
@@ -29,7 +31,7 @@ registerPlugin(FilePondPluginImagePreview);
 
 
 @NgModule({
-  declarations: [MainComponent, PlayComponent, CompassComponent, HistoryComponent, SettingsComponent, SecureImageComponent, CheckinComponent],
+  declarations: [MainComponent, PlayComponent, CompassComponent, HistoryComponent, SettingsComponent, SecureImageComponent, CheckinComponent, IdenticonHashDirective],
   imports: [
     CommonModule,
     DashboardRoutingModule,

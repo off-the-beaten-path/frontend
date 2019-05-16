@@ -40,11 +40,11 @@ export class HistoryComponent implements OnInit {
                 tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
               ],
               zoom: 5,
-              center: latLng(checkin.location.lat, checkin.location.lng)
+              center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
             };
 
             this.leafletLayers = checkins.map(
-              c => marker([c.location.lat, c.location.lng], {
+              c => marker([c.geocache.location.lat, c.geocache.location.lng], {
                 icon: icon({
                   iconSize: [25, 41],
                   iconAnchor: [13, 41],

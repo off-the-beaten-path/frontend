@@ -85,11 +85,11 @@ export class CheckinComponent implements OnInit {
                 tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' })
               ],
               zoom: 14,
-              center: latLng(checkin.location.lat, checkin.location.lng)
+              center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
             };
 
             this.leafletLayers = [
-              marker([ checkin.location.lat, checkin.location.lng ], {
+              marker([ checkin.geocache.location.lat, checkin.geocache.location.lng ], {
                 icon: icon({
                   iconSize: [ 25, 41 ],
                   iconAnchor: [ 13, 41 ],
@@ -114,11 +114,11 @@ export class CheckinComponent implements OnInit {
                 tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' })
               ],
               zoom: 14,
-              center: latLng(checkin.location.lat, checkin.location.lng)
+              center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
             };
 
             this.leafletLayers = [
-              marker([ checkin.location.lat, checkin.location.lng ], {
+              marker([ checkin.geocache.location.lat, checkin.geocache.location.lng ], {
                 icon: icon({
                   iconSize: [ 25, 41 ],
                   iconAnchor: [ 13, 41 ],

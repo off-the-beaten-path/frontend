@@ -1,8 +1,12 @@
 <div *ngIf="(checkin$ | async) as checkin; else loader">
   <mat-card>
     <mat-card-header>
-      <div mat-card-avatar class="header-image"></div>
-      <mat-card-title>{{ checkin.geocache.location.lat }}, {{ checkin.geocache.location.lng}}</mat-card-title>
+      <div mat-card-avatar>
+        <svg width="40" height="40" [identiconHash]="checkin.geocache.location.geohash"></svg>
+      </div>
+      <mat-card-title>
+        #{{ checkin.geocache.location.geohash }}
+      </mat-card-title>
       <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
     </mat-card-header>
 
@@ -27,7 +31,8 @@
 
     <mat-card-actions *ngIf="!editing">
       <button mat-button
-              (click)="editing = true">Edit</button>
+              (click)="editing = true">Edit
+      </button>
     </mat-card-actions>
 
     <mat-card-content *ngIf="editing">
@@ -46,9 +51,11 @@
 
     <mat-card-actions *ngIf="editing">
       <button mat-button
-              (click)="updateCheckin()">Submit</button>
+              (click)="updateCheckin()">Submit
+      </button>
       <button mat-button
-              (click)="editing = false">Cancel</button>
+              (click)="editing = false">Cancel
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>
