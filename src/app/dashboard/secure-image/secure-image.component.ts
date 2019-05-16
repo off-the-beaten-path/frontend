@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { ImageService } from '../../services/api/image.service';
@@ -17,6 +17,12 @@ export class SecureImageComponent {
   public set image(img: IImage) {
     this.src$.next(img);
   }
+
+  @Input()
+  public allowDelete = false;
+
+  @Output()
+  public delete = new EventEmitter();
 
   private src$ = new BehaviorSubject<IImage>(null);
 

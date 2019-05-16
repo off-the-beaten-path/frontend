@@ -19,9 +19,15 @@
          (leafletMapReady)="onMapReady($event)">
     </div>
 
-    <app-secure-image *ngIf="null !== checkin.image"
-                      [hidden]="editing"
-                      [image]="checkin.image"></app-secure-image>
+    <app-secure-image *ngIf="null !== checkin.image && !hasDeletedImage"
+                      [image]="checkin.image"
+                      [allowDelete]="editing"
+                      (delete)="onImageDelete()"></app-secure-image>
+
+    <file-pond #myPond
+               *ngIf="editing && (null === checkin.image || hasDeletedImage)"
+               name="file"
+               [options]="pondOptions"></file-pond>
 
     <mat-card-content *ngIf="!editing">
       <p>
@@ -31,7 +37,7 @@
 
     <mat-card-actions *ngIf="!editing">
       <button mat-button
-              (click)="editing = true">Edit
+              (click)="enterEditingMode()">Edit
       </button>
     </mat-card-actions>
 
@@ -42,10 +48,6 @@
                       matInput
                       placeholder="Comment"></textarea>
         </mat-form-field>
-
-        <file-pond #myPond
-                   name="file"
-                   [options]="pondOptions"></file-pond>
       </form>
     </mat-card-content>
 
@@ -54,7 +56,7 @@
               (click)="updateCheckin()">Submit
       </button>
       <button mat-button
-              (click)="editing = false">Cancel
+              (click)="exitEditingMode()">Cancel
       </button>
     </mat-card-actions>
   </mat-card>

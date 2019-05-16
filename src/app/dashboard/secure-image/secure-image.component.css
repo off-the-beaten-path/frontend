@@ -1,3 +1,13 @@
 .mat-card-image {
   margin-top: auto !important;
 }
+
+button {
+  position: absolute;
+  right: 1rem;
+  bottom: 3rem;
+}
+
+.container {
+  position: relative;
+}

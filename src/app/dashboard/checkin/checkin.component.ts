@@ -20,6 +20,7 @@ export class CheckinComponent implements OnInit {
 
   public checkin$: Observable<ICheckIn> = null;
   public editing = false;
+  public hasDeletedImage = false;
 
   public updateForm: FormGroup = null;
 
@@ -32,7 +33,7 @@ export class CheckinComponent implements OnInit {
               private authService: AuthService) {
     this.updateForm = new FormGroup({
       text: new FormControl(),
-      image_id: new FormControl(),
+      image_id: new FormControl(null),
       checkin_id: new FormControl()
     });
 
@@ -128,7 +129,7 @@ export class CheckinComponent implements OnInit {
               }),
             ];
 
-            this.editing = false;
+            this.exitEditingMode();
           }
         )
       );
@@ -136,5 +137,23 @@ export class CheckinComponent implements OnInit {
 
   onMapReady(map: Map): void {
 
+  }
+
+  onImageDelete(): void {
+    this.updateForm.patchValue({
+      image_id: -1
+    });
+
+    this.hasDeletedImage = true;
+  }
+
+  enterEditingMode() {
+    this.editing = true;
+    this.hasDeletedImage = false;
+  }
+
+  exitEditingMode() {
+    this.editing = false;
+    this.hasDeletedImage = false;
   }
 }
