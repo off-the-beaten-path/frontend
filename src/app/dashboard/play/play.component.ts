@@ -8,6 +8,8 @@ import { Directions, IGeoCache, ILatLngPosition } from '../../models';
 
 import { Subscription, of, zip } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { CheckInService } from '../../services/api/checkin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-play',
@@ -26,7 +28,9 @@ export class PlayComponent implements OnInit, OnDestroy {
 
   constructor(private locationService: GeolocationService,
               private geoCacheService: GeoCacheService,
-              private settings: SettingsService) {
+              private settings: SettingsService,
+              private checkinService: CheckInService,
+              private router: Router) {
   }
 
   public ngOnInit() {
@@ -54,6 +58,14 @@ export class PlayComponent implements OnInit, OnDestroy {
         error => {
           console.log('DirectionsComponent', error);
         }
+      );
+  }
+
+  public doCheckIn(): void {
+    this.checkinService
+      .create(this.target, this.directions.end)
+      .subscribe(
+        checkin => this.router.navigate(['/', 'dashboard', 'checkin', checkin.id])
       );
   }
 

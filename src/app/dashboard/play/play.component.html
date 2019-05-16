@@ -2,7 +2,7 @@
   <span>You're On Your Way</span>
 </mat-toolbar>
 
-<div *ngIf="directions; else loader" class="container">
+<div *ngIf="directions; else loader">
   <mat-card>
     <mat-card-header>
     </mat-card-header>
@@ -15,15 +15,16 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <a *ngIf="closeEnough; else updateButton" [routerLink]="['/bulletin', target.key]" class="example-spacer animated swing" mat-button>
-        Bulletin
+      <a *ngIf="closeEnough; else updateButton"
+         mat-button
+        (click)="doCheckIn()">
+        CheckIn
       </a>
       <ng-template #updateButton>
-        <button  (click)="onManualUpdate()" class="example-spacer animated swing" mat-button>
+        <button  (click)="onManualUpdate()" mat-button>
           Update
         </button>
       </ng-template>
-      <button class="example-spacer" (click)="onOpenSettings()" mat-button>Settings and Help</button>
     </mat-card-actions>
   </mat-card>
 </div>
@@ -39,6 +40,11 @@
       <p>
         <strong>Note:</strong> You must allow location access for this website to work properly.
       </p>
+
+      <mat-progress-bar
+        color="primary"
+        mode="indeterminate">
+      </mat-progress-bar>
     </mat-card-content>
   </mat-card>
 </ng-template>
