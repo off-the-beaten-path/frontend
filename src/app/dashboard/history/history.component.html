@@ -14,12 +14,15 @@
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <a [routerLink]="['/', 'dashboard', 'checkin', checkin.id]" mat-button>More Information</a>
+    <a [routerLink]="['/', 'dashboard', 'checkin', checkin.id]"
+       mat-button>
+      More
+    </a>
   </mat-card-actions>
 </mat-card>
 
   <mat-card *ngIf="history.length === 0">
-    No results!
+    No results.
   </mat-card>
 </div>
 

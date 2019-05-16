@@ -7,11 +7,19 @@
     <mat-icon>menu</mat-icon>
   </button>
 
-	<a routerLink="/">
+	<span>
     Off the Beaten Path
+  </span>
+
+  <a *ngIf="user$ | async"
+     mat-icon-button
+     [routerLink]="['/', 'dashboard']">
+    <mat-icon>home</mat-icon>
   </a>
 
-  <button mat-icon-button>
-    <mat-icon>whatshot</mat-icon>
-  </button>
+  <a *ngIf="!(user$ | async)"
+     mat-icon-button
+     routerLink="/">
+    <mat-icon>home</mat-icon>
+  </a>
 </mat-toolbar>
