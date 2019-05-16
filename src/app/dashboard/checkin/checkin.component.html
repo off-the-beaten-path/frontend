@@ -1,36 +1,41 @@
 <div *ngIf="(checkin$ | async) as checkin; else loader">
-  <mat-card *ngIf="!editing">
+  <mat-card>
     <mat-card-header>
       <div mat-card-avatar class="header-image"></div>
       <mat-card-title>{{ checkin.geocache.location.lat }}, {{ checkin.geocache.location.lng}}</mat-card-title>
       <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
     </mat-card-header>
 
+    <div style="height: 300px;"
+         [hidden]="editing"
+         mat-card-image
+         leaflet
+         [leafletOptions]="leafletOptions"
+         [leafletLayers]="leafletLayers"
+         (leafletMapReady)="onMapReady($event)">
+    </div>
+
     <app-secure-image *ngIf="null !== checkin.image"
+                      [hidden]="editing"
                       [image]="checkin.image"></app-secure-image>
-    <mat-card-content>
+
+    <mat-card-content *ngIf="!editing">
       <p>
         {{ checkin.text }}
       </p>
     </mat-card-content>
-    <mat-card-actions>
+
+    <mat-card-actions *ngIf="!editing">
       <button mat-button
               (click)="editing = true">Edit</button>
     </mat-card-actions>
-  </mat-card>
 
-  <mat-card *ngIf="editing">
-    <mat-card-header>
-      <div mat-card-avatar class="header-image"></div>
-      <mat-card-title>{{ checkin.geocache.location.lat }}, {{ checkin.geocache.location.lng}}</mat-card-title>
-      <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
+    <mat-card-content *ngIf="editing">
       <form [formGroup]="updateForm">
         <mat-form-field style="width: 100%;">
-          <textarea formControlName="text"
-                    matInput
-                    placeholder="Comment"></textarea>
+            <textarea formControlName="text"
+                      matInput
+                      placeholder="Comment"></textarea>
         </mat-form-field>
 
         <file-pond #myPond
@@ -38,7 +43,8 @@
                    [options]="pondOptions"></file-pond>
       </form>
     </mat-card-content>
-    <mat-card-actions>
+
+    <mat-card-actions *ngIf="editing">
       <button mat-button
               (click)="updateCheckin()">Submit</button>
       <button mat-button

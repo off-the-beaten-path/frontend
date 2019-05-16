@@ -11,6 +11,7 @@ import { MaterialModule } from './material/material.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { JWT_OPTIONS, JwtHelperService, JwtModule } from '@russon77/angular-jwt';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -81,7 +82,8 @@ export function jwtOptionsFactory(authService: AuthService) {
         useFactory: jwtOptionsFactory,
         deps: [AuthService]
       }
-    })
+    }),
+    LeafletModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true},

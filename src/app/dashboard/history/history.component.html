@@ -1,29 +1,50 @@
 <div *ngIf="(history$ | async) as history; else loader">
-<mat-card *ngFor="let checkin of history">
-  <mat-card-header>
-    <div mat-card-avatar class="header-image"></div>
-    <mat-card-title>{{ checkin.geocache.location.lat }}, {{ checkin.geocache.location.lng}}</mat-card-title>
-    <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
-  </mat-card-header>
 
-  <app-secure-image *ngIf="null !== checkin.image"
-                    [image]="checkin.image"></app-secure-image>
-  <mat-card-content>
-    <p>
-      {{ checkin.text }}
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <a [routerLink]="['/', 'dashboard', 'checkin', checkin.id]"
-       mat-button>
-      More
-    </a>
-  </mat-card-actions>
-</mat-card>
+  <mat-tab-group mat-align-tabs="center"
+                 mat-stretch-tabs
+                 dynamicHeight
+                 (selectedTabChange)="onSelectedTabChange($event)">
+    <mat-tab label="List">
+      <mat-card *ngFor="let checkin of history">
+        <mat-card-header>
+          <div mat-card-avatar class="header-image"></div>
+          <mat-card-title>{{ checkin.geocache.location.lat }}, {{ checkin.geocache.location.lng}}</mat-card-title>
+          <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
+        </mat-card-header>
 
-  <mat-card *ngIf="history.length === 0">
-    No results.
-  </mat-card>
+        <app-secure-image *ngIf="null !== checkin.image"
+                          [image]="checkin.image"></app-secure-image>
+        <mat-card-content>
+          <p>
+            {{ checkin.text }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a [routerLink]="['/', 'dashboard', 'checkin', checkin.id]"
+             mat-button>
+            More
+          </a>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card *ngIf="history.length === 0">
+        No results.
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Map">
+      <mat-card>
+        <div style="height: 400px;"
+             mat-card-image
+             leaflet
+             [leafletOptions]="leafletOptions"
+             [leafletLayers]="leafletLayers"
+             (leafletMapReady)="onMapReady($event)">
+        </div>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+
+
 </div>
 
 <ng-template #loader>

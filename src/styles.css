@@ -4,6 +4,7 @@
 @import '~ngx-toastr/toastr';
 @import '~filepond/dist/filepond.min.css';
 @import '~filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+@import '~leaflet/dist/leaflet.css';
 
 html, body {
   min-height: 100vh;

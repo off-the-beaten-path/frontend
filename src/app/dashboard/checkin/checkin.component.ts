@@ -3,10 +3,11 @@ import { Observable } from 'rxjs';
 import { ICheckIn } from '../../models/checkin.model';
 import { CheckInService } from '../../services/api/checkin.service';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
+import { latLng, tileLayer, marker, icon, Map } from 'leaflet';
 
 @Component({
   selector: 'app-checkin',
@@ -23,6 +24,8 @@ export class CheckinComponent implements OnInit {
   public updateForm: FormGroup = null;
 
   public pondOptions: any = null;
+  public leafletOptions: any = null;
+  public leafletLayers: any[] = null;
 
   constructor(private checkinService: CheckInService,
               private route: ActivatedRoute,
@@ -76,6 +79,25 @@ export class CheckinComponent implements OnInit {
               image_id: checkin.image && checkin.image.id,
               checkin_id: checkin.id
             });
+
+            this.leafletOptions = {
+              layers: [
+                tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' })
+              ],
+              zoom: 14,
+              center: latLng(checkin.location.lat, checkin.location.lng)
+            };
+
+            this.leafletLayers = [
+              marker([ checkin.location.lat, checkin.location.lng ], {
+                icon: icon({
+                  iconSize: [ 25, 41 ],
+                  iconAnchor: [ 13, 41 ],
+                  iconUrl: 'assets/marker-icon.png',
+                  shadowUrl: 'assets/marker-shadow.png'
+                })
+              }),
+            ];
           }
         )
       );
@@ -86,12 +108,33 @@ export class CheckinComponent implements OnInit {
       .update(this.updateForm.value)
       .pipe(
         tap(
-          () => this.editing = false
+          checkin => {
+            this.leafletOptions = {
+              layers: [
+                tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' })
+              ],
+              zoom: 14,
+              center: latLng(checkin.location.lat, checkin.location.lng)
+            };
+
+            this.leafletLayers = [
+              marker([ checkin.location.lat, checkin.location.lng ], {
+                icon: icon({
+                  iconSize: [ 25, 41 ],
+                  iconAnchor: [ 13, 41 ],
+                  iconUrl: 'assets/marker-icon.png',
+                  shadowUrl: 'assets/marker-shadow.png'
+                })
+              }),
+            ];
+
+            this.editing = false;
+          }
         )
       );
   }
 
-  pondHandleInit() {
-    console.log('FilePond has initialised', this.myPond);
+  onMapReady(map: Map): void {
+
   }
 }
