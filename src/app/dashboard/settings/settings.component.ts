@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-settings',
@@ -12,7 +13,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private doConstantUpdateSubscription: null | Subscription = null;
 
+  public changePasswordForm: FormGroup = null;
+  public deleteAccountForm: FormGroup = null;
+
   constructor(private settings: SettingsService) {
+    this.deleteAccountForm = new FormGroup({
+      password: new FormControl('', Validators.required)
+    });
+
+    this.changePasswordForm = new FormGroup({
+      oldPassword: new FormControl('', Validators.required),
+      newPassword: new FormControl('', Validators.required)
+    })
   }
 
   ngOnInit() {
@@ -31,8 +43,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  public toggleDoConstantUpdates() {
+  toggleDoConstantUpdates() {
     this.settings.doConstantUpdate = !this.doConstantUpdates;
   }
 
+  onDeleteAccount(): void {
+
+  }
+
+  onChangePassword(): void {
+
+  }
 }

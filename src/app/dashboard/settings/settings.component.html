@@ -37,6 +37,83 @@
         more information.
       </p>
     </section>
+
+    <mat-divider></mat-divider>
+
+    <section>
+
+      <h4>Account</h4>
+
+      <form [formGroup]="changePasswordForm"
+            (ngSubmit)="onChangePassword()">
+        <h5>
+          Change Password
+        </h5>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Current Password</mat-label>
+          <input matInput
+                 formControlName="oldPassword"
+                 placeholder="******"
+                 type="password">
+          <mat-icon matSuffix>vpn_key</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>New Password</mat-label>
+          <input matInput
+                 formControlName="newPassword"
+                 placeholder="******"
+                 type="password">
+          <mat-icon matSuffix>vpn_key</mat-icon>
+        </mat-form-field>
+
+        <button type="submit"
+                mat-stroked-button
+                [disabled]="changePasswordForm.invalid">
+          Change Password
+        </button>
+      </form>
+
+      <h5>
+        Data Export
+      </h5>
+
+      <p>
+        Download all of your data as a zip archive. Includes user account, checkins, and images.
+      </p>
+
+      <button mat-stroked-button>
+        Download Archive
+      </button>
+
+      <form [formGroup]="deleteAccountForm"
+            (ngSubmit)="onDeleteAccount()">
+        <h5>
+          Delete Account
+        </h5>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput
+                 formControlName="password"
+                 placeholder="******"
+                 type="password">
+          <mat-icon matSuffix>vpn_key</mat-icon>
+        </mat-form-field>
+
+        <p>
+          Note: this action cannot be undone!
+        </p>
+
+        <button type="submit"
+                mat-stroked-button
+                color="warn"
+                [disabled]="deleteAccountForm.invalid">
+          Delete Account
+        </button>
+      </form>
+    </section>
   </mat-card-content>
 </mat-card>
 
