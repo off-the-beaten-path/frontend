@@ -81,7 +81,8 @@ export function jwtOptionsFactory(authService: AuthService) {
         useFactory: jwtOptionsFactory,
         deps: [AuthService]
       }
-    })],
+    })
+  ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true},
   ],

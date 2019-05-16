@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ICheckIn } from '../../models/checkin.model';
 import { CheckInService } from '../../services/api/checkin.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-checkin',
@@ -13,18 +15,50 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class CheckinComponent implements OnInit {
 
+  @ViewChild('myPond') myPond: any;
+
   public checkin$: Observable<ICheckIn> = null;
   public editing = false;
 
   public updateForm: FormGroup = null;
 
+  public pondOptions: any = null;
+
   constructor(private checkinService: CheckInService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private authService: AuthService) {
     this.updateForm = new FormGroup({
       text: new FormControl(),
       image_id: new FormControl(),
       checkin_id: new FormControl()
     });
+
+    this.pondOptions = {
+      acceptedFileTypes: 'image/jpeg, image/png',
+      maxFileSize: '10MB',
+      server: {
+        url: environment.api,
+        process: {
+          url: '/image/',
+          method: 'POST',
+          withCredentials: false,
+          headers: {
+            Authorization: `Bearer ${authService.currentUserValue.jwt}`
+          },
+          onload: resp => {
+            resp = JSON.parse(resp);
+
+            this.updateForm.patchValue({image_id: resp.id});
+
+            return resp.id;
+          }
+        },
+        load: null,
+        fetch: null,
+        revert: null,
+        restore: null
+      }
+    };
   }
 
   ngOnInit() {
@@ -55,5 +89,9 @@ export class CheckinComponent implements OnInit {
           () => this.editing = false
         )
       );
+  }
+
+  pondHandleInit() {
+    console.log('FilePond has initialised', this.myPond);
   }
 }
