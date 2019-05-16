@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CheckInService } from '../../services/api/checkin.service';
 import { ICheckIn } from '../../models/checkin.model';
-import {environment} from '../../../environments/environment';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-history',
@@ -10,20 +11,20 @@ import {environment} from '../../../environments/environment';
 })
 export class HistoryComponent implements OnInit {
 
-  public history: ICheckIn[] = [];
-  public loading = true;
+  public history$: Observable<ICheckIn[]> = null;
 
-  public environment = environment;
-
-  constructor(private checkInService: CheckInService) { }
+  constructor(private checkInService: CheckInService) {
+  }
 
   ngOnInit() {
-    this.checkInService
-      .getOwn()
-      .subscribe(
-        resp => {
-          this.history = resp.items;
-        }
+    this.history$ = this.checkInService
+      .getAll()
+      .pipe(
+        map(
+          resp => {
+            return resp.items;
+          }
+        )
       );
   }
 

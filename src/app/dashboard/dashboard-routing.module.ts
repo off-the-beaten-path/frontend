@@ -4,6 +4,7 @@ import { MainComponent } from './main/main.component';
 import { PlayComponent } from './play/play.component';
 import { HistoryComponent } from './history/history.component';
 import { SettingsComponent } from './settings/settings.component';
+import { CheckinComponent } from './checkin/checkin.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent
+  },
+  {
+    path: 'checkin/:id',
+    component: CheckinComponent
   }
 ];
 

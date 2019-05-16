@@ -1,5 +1,4 @@
-<div *ngIf="(history$ | async) as history; else loader">
-<mat-card *ngFor="let checkin of history">
+<mat-card *ngIf="(checkin$ | async) as checkin; else loader">
   <mat-card-header>
     <div mat-card-avatar class="header-image"></div>
     <mat-card-title>{{ checkin.geocache.location.lat }}, {{ checkin.geocache.location.lng}}</mat-card-title>
@@ -14,14 +13,9 @@
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <a [routerLink]="['/', 'dashboard', 'checkin', checkin.id]" mat-button>More Information</a>
+    <button mat-button>Edit</button>
   </mat-card-actions>
 </mat-card>
-
-  <mat-card *ngIf="history.length === 0">
-    No results!
-  </mat-card>
-</div>
 
 <ng-template #loader>
   <mat-card>

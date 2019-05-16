@@ -12,9 +12,10 @@ import { CompassComponent } from './compass/compass.component';
 import { HistoryComponent } from './history/history.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SecureImageComponent } from './secure-image/secure-image.component';
+import { CheckinComponent } from './checkin/checkin.component';
 
 @NgModule({
-  declarations: [MainComponent, PlayComponent, CompassComponent, HistoryComponent, SettingsComponent, SecureImageComponent],
+  declarations: [MainComponent, PlayComponent, CompassComponent, HistoryComponent, SettingsComponent, SecureImageComponent, CheckinComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

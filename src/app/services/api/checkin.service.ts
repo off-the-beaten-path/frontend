@@ -12,8 +12,13 @@ export class CheckInService {
 
   constructor(private http: HttpClient) { }
 
-  getOwn(): Observable<IEasyPagination<ICheckIn>> {
+  getAll(): Observable<IEasyPagination<ICheckIn>> {
     return this.http
       .get<IEasyPagination<ICheckIn>>(`${environment.api}/checkin/user/`);
+  }
+
+  getOne(id: number): Observable<ICheckIn> {
+    return this.http
+      .get<ICheckIn>(`${environment.api}/checkin/user/${id}`);
   }
 }
