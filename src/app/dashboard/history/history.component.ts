@@ -40,7 +40,7 @@ export class HistoryComponent implements OnInit {
                 layers: [
                   tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
                 ],
-                zoom: 5,
+                zoom: 8,
                 center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
               };
 
