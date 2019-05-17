@@ -10,14 +10,8 @@
       <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
     </mat-card-header>
 
-    <div style="height: 300px;"
-         [hidden]="editing"
-         mat-card-image
-         leaflet
-         [leafletOptions]="leafletOptions"
-         [leafletLayers]="leafletLayers"
-         (leafletMapReady)="onMapReady($event)">
-    </div>
+    <app-map [layers]="leafletLayers"
+             [options]="leafletOptions"></app-map>
 
     <app-secure-image *ngIf="null !== checkin.image && !hasDeletedImage"
                       [image]="checkin.image"

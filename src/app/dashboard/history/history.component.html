@@ -38,13 +38,9 @@
     </mat-tab>
     <mat-tab label="Map">
       <mat-card>
-        <div style="height: 400px;"
-             mat-card-image
-             leaflet
-             [leafletOptions]="leafletOptions"
-             [leafletLayers]="leafletLayers"
-             (leafletMapReady)="onMapReady($event)">
-        </div>
+        <app-map [layers]="leafletLayers"
+                 [options]="leafletOptions"
+                 (mapReady)="onMapReady($event)"></app-map>
       </mat-card>
     </mat-tab>
   </mat-tab-group>

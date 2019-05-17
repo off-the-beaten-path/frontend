@@ -17,6 +17,7 @@ import { HistoryComponent } from './history/history.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SecureImageComponent } from './secure-image/secure-image.component';
 import { CheckinComponent } from './checkin/checkin.component';
+import { MapComponent } from './map/map.component';
 
 import { IdenticonHashDirective } from './identicon/identicon-hash.directive';
 
@@ -31,7 +32,7 @@ registerPlugin(FilePondPluginImagePreview);
 
 
 @NgModule({
-  declarations: [MainComponent, PlayComponent, CompassComponent, HistoryComponent, SettingsComponent, SecureImageComponent, CheckinComponent, IdenticonHashDirective],
+  declarations: [MainComponent, PlayComponent, CompassComponent, HistoryComponent, SettingsComponent, SecureImageComponent, CheckinComponent, IdenticonHashDirective, MapComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

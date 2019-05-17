@@ -109,34 +109,11 @@ export class CheckinComponent implements OnInit {
       .update(this.updateForm.value)
       .pipe(
         tap(
-          checkin => {
-            this.leafletOptions = {
-              layers: [
-                tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' })
-              ],
-              zoom: 14,
-              center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
-            };
-
-            this.leafletLayers = [
-              marker([ checkin.geocache.location.lat, checkin.geocache.location.lng ], {
-                icon: icon({
-                  iconSize: [ 25, 41 ],
-                  iconAnchor: [ 13, 41 ],
-                  iconUrl: 'assets/marker-icon.png',
-                  shadowUrl: 'assets/marker-shadow.png'
-                })
-              }),
-            ];
-
+          () => {
             this.exitEditingMode();
           }
         )
       );
-  }
-
-  onMapReady(map: Map): void {
-
   }
 
   onImageDelete(): void {

@@ -49,17 +49,6 @@ export class HistoryComponent implements OnInit {
                 })
               })
             );
-
-            // show a player icon at the player position
-            this.leafletLayers.push(
-              marker([position.lat, position.lng], {
-                icon: icon({
-                  iconSize: [44, 64],
-                  iconAnchor: [34, 54],
-                  iconUrl: 'assets/user-sprite.png'
-                })
-              })
-            );
           }
         ),
         map(
