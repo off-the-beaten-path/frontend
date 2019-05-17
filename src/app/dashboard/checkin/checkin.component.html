@@ -10,7 +10,8 @@
       <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
     </mat-card-header>
 
-    <app-map [checkins]="[checkin]"></app-map>
+    <app-map [checkins]="[checkin]"
+             center="checkin"></app-map>
 
     <app-secure-image *ngIf="null !== checkin.image && !hasDeletedImage"
                       [image]="checkin.image"

@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { icon, LatLng, latLng, Map, Marker, marker, tileLayer } from 'leaflet';
+import { icon, latLng, Map, Marker, marker, tileLayer } from 'leaflet';
 import { GeolocationService } from '../../services/geolocation.service';
 import { Subscription } from 'rxjs';
 import { ICheckIn } from '../../models/checkin.model';
-import { ILatLngPosition } from '../../models';
+
+// Tokyo, baby!
+const DEFAULT_LOCATION = latLng(40.6943, -73.9249);;
+const DEFAULT_ZOOM = 8;
 
 @Component({
   selector: 'app-map',
@@ -20,16 +23,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   @Input()
   public set checkins(checkins: ICheckIn[]) {
-    let center: LatLng;
-
-    if (this.center === 'user' && this.userLocation !== null) {
-      center = latLng(this.userLocation.lat, this.userLocation.lng);
-    } else if (checkins.length > 0) {
-      center = latLng(checkins[0].geocache.location.lat, checkins[0].geocache.location.lng);
-    } else {
-      // Tokyo, baby!
-      center = latLng(40.6943, -73.9249);
-    }
+    const center = latLng(checkins[0].geocache.location.lat, checkins[0].geocache.location.lng);
 
     this.leafletOptions = {
       layers: [
@@ -49,6 +43,10 @@ export class MapComponent implements OnInit, OnDestroy {
         })
       })
     );
+
+    this.leafletLayers.push(
+      this.userMarker
+    );
   }
 
   public leafletOptions: any = {
@@ -59,8 +57,6 @@ export class MapComponent implements OnInit, OnDestroy {
     center: latLng(40.6943, -73.9249)
   };
 
-  private userLocation: ILatLngPosition = null;
-
   public leafletLayers: any[] = [];
   private userMarker: Marker = null;
 
@@ -69,31 +65,26 @@ export class MapComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(private geolocationService: GeolocationService) {
+    this.userMarker = marker([DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng], {
+      icon: icon({
+        iconSize: [44, 64],
+        iconAnchor: [34, 54],
+        iconUrl: 'assets/user-sprite.png'
+      })
+    });
   }
 
   ngOnInit() {
     this.subscriptions.push(
       this.geolocationService
-        .watchPosition()
+        .getCurrentPosition()
         .subscribe(
           position => {
-            if (null === this.userMarker) {
-              this.userMarker = marker([position.lat, position.lng], {
-                icon: icon({
-                  iconSize: [44, 64],
-                  iconAnchor: [34, 54],
-                  iconUrl: 'assets/user-sprite.png'
-                })
-              });
+            this.userMarker.setLatLng([position.lat, position.lng]);
 
-              this.leafletLayers.push(
-                this.userMarker
-              );
-            } else {
-              this.userMarker.setLatLng([position.lat, position.lng]);
+            if (this.center === 'user') {
+              this.leafletMap.setView([position.lat, position.lng], DEFAULT_ZOOM);
             }
-
-            this.userLocation = position;
           }
         )
     );
