@@ -65,4 +65,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
       .changePassword({old: oldPassword, pass: newPassword})
       .subscribe();
   }
+
+  onDownloadArchive(): void {
+    this.authService
+      .downloadArchive()
+      .subscribe();
+  }
 }

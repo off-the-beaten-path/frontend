@@ -116,6 +116,11 @@ export class AuthService {
       );
   }
 
+  downloadArchive(): Observable<any> {
+    return this.http
+      .get<any>(`${environment.api}/user/export`);
+  }
+
   logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
