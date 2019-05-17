@@ -33,26 +33,28 @@ export class HistoryComponent implements OnInit {
         ),
         tap(
           checkins => {
-            const [checkin, ..._] = checkins;
+            if (checkins.length > 0) {
+              const [checkin, ..._] = checkins;
 
-            this.leafletOptions = {
-              layers: [
-                tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
-              ],
-              zoom: 5,
-              center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
-            };
+              this.leafletOptions = {
+                layers: [
+                  tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
+                ],
+                zoom: 5,
+                center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
+              };
 
-            this.leafletLayers = checkins.map(
-              c => marker([c.geocache.location.lat, c.geocache.location.lng], {
-                icon: icon({
-                  iconSize: [25, 41],
-                  iconAnchor: [13, 41],
-                  iconUrl: 'assets/marker-icon.png',
-                  shadowUrl: 'assets/marker-shadow.png'
+              this.leafletLayers = checkins.map(
+                c => marker([c.geocache.location.lat, c.geocache.location.lng], {
+                  icon: icon({
+                    iconSize: [25, 41],
+                    iconAnchor: [13, 41],
+                    iconUrl: 'assets/marker-icon.png',
+                    shadowUrl: 'assets/marker-shadow.png'
+                  })
                 })
-              })
-            );
+              );
+            }
           }
         )
       );
