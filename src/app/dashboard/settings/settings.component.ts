@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-settings',
@@ -69,6 +70,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   onDownloadArchive(): void {
     this.authService
       .downloadArchive()
-      .subscribe();
+      .subscribe(
+        res => {
+          const blob = new Blob([res], {type: 'application/zip'});
+          saveAs(blob, 'archive.zip');
+        }
+      );
   }
 }

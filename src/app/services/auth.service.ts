@@ -118,7 +118,7 @@ export class AuthService {
 
   downloadArchive(): Observable<any> {
     return this.http
-      .get<any>(`${environment.api}/user/export`);
+      .get<any>(`${environment.api}/user/export`, {responseType: 'blob' as 'json'});
   }
 
   logout() {
