@@ -99,6 +99,23 @@ export class AuthService {
       );
   }
 
+  deleteAccount({password}: {password: string}): Observable<null> {
+    return this.http
+      .post<{}>(`${environment.api}/user/delete`, {password})
+      .pipe(
+        tap(
+          () => {
+            localStorage.removeItem('currentUser');
+            this.currentUserSubject.next(null);
+            this.toastr.info('Your account has been deleted');
+          }
+        ),
+        map(
+          () => null
+        )
+      );
+  }
+
   logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);

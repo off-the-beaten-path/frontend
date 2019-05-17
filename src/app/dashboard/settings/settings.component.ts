@@ -3,6 +3,7 @@ import { SettingsService } from '../../services/settings.service';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -18,7 +19,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public deleteAccountForm: FormGroup = null;
 
   constructor(private settings: SettingsService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
     this.deleteAccountForm = new FormGroup({
       password: new FormControl('', Validators.required)
     });
@@ -26,7 +28,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.changePasswordForm = new FormGroup({
       oldPassword: new FormControl('', Validators.required),
       newPassword: new FormControl('', Validators.required)
-    })
+    });
   }
 
   ngOnInit() {
@@ -50,7 +52,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   onDeleteAccount(): void {
-
+    this.authService
+      .deleteAccount(this.deleteAccountForm.value)
+      .subscribe(
+        () => this.router.navigate(['/'])
+      );
   }
 
   onChangePassword(): void {
