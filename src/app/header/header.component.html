@@ -7,9 +7,14 @@
     <mat-icon>menu</mat-icon>
   </button>
 
-	<span>
-    Off the Beaten Path
-  </span>
+	<div fxLayout="row">
+    <span style="margin-right: 0.5rem;">
+      Off the Beaten Path
+    </span>
+    <mat-chip-list>
+      <mat-chip>{{ environment.VERSION }}</mat-chip>
+    </mat-chip-list>
+  </div>
 
   <a *ngIf="user$ | async"
      mat-icon-button
