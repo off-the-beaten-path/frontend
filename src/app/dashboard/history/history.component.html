@@ -38,8 +38,8 @@
     </mat-tab>
     <mat-tab label="Map">
       <mat-card>
-        <app-map [layers]="leafletLayers"
-                 [options]="leafletOptions"
+        <app-map [checkins]="history"
+                 center="user"
                  (mapReady)="onMapReady($event)"></app-map>
       </mat-card>
     </mat-tab>

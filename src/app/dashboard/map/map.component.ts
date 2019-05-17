@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { icon, latLng, Map, Marker, marker, tileLayer } from 'leaflet';
+import { icon, LatLng, latLng, Map, Marker, marker, tileLayer } from 'leaflet';
 import { GeolocationService } from '../../services/geolocation.service';
 import { Subscription } from 'rxjs';
+import { ICheckIn } from '../../models/checkin.model';
+import { ILatLngPosition } from '../../models';
 
 @Component({
   selector: 'app-map',
@@ -14,12 +16,39 @@ export class MapComponent implements OnInit, OnDestroy {
   public mapReady = new EventEmitter<Map>();
 
   @Input()
-  public set options(options: any) {
-    if (null !== options) {
-      this.leafletOptions = {
-        ...options
-      };
+  public center: 'user' | 'checkin' = 'user';
+
+  @Input()
+  public set checkins(checkins: ICheckIn[]) {
+    let center: LatLng;
+
+    if (this.center === 'user' && this.userLocation !== null) {
+      center = latLng(this.userLocation.lat, this.userLocation.lng);
+    } else if (checkins.length > 0) {
+      center = latLng(checkins[0].geocache.location.lat, checkins[0].geocache.location.lng);
+    } else {
+      // Tokyo, baby!
+      center = latLng(40.6943, -73.9249);
     }
+
+    this.leafletOptions = {
+      layers: [
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
+      ],
+      zoom: 8,
+      center
+    };
+
+    this.leafletLayers = checkins.map(
+      c => marker([c.geocache.location.lat, c.geocache.location.lng], {
+        icon: icon({
+          iconSize: [25, 41],
+          iconAnchor: [13, 41],
+          iconUrl: 'assets/marker-icon.png',
+          shadowUrl: 'assets/marker-shadow.png'
+        })
+      })
+    );
   }
 
   public leafletOptions: any = {
@@ -30,14 +59,7 @@ export class MapComponent implements OnInit, OnDestroy {
     center: latLng(40.6943, -73.9249)
   };
 
-  @Input()
-  public set layers(layers: any[]) {
-    if (null !== layers) {
-      this.leafletLayers = [
-        ...layers
-      ];
-    }
-  }
+  private userLocation: ILatLngPosition = null;
 
   public leafletLayers: any[] = [];
   private userMarker: Marker = null;
@@ -70,6 +92,8 @@ export class MapComponent implements OnInit, OnDestroy {
             } else {
               this.userMarker.setLatLng([position.lat, position.lng]);
             }
+
+            this.userLocation = position;
           }
         )
     );
