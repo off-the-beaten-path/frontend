@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -16,7 +17,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public changePasswordForm: FormGroup = null;
   public deleteAccountForm: FormGroup = null;
 
-  constructor(private settings: SettingsService) {
+  constructor(private settings: SettingsService,
+              private authService: AuthService) {
     this.deleteAccountForm = new FormGroup({
       password: new FormControl('', Validators.required)
     });
@@ -52,6 +54,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   onChangePassword(): void {
-
+    const {oldPassword, newPassword} = this.changePasswordForm.value;
+    this.authService
+      .changePassword({old: oldPassword, pass: newPassword})
+      .subscribe();
   }
 }
