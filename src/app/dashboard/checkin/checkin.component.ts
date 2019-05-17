@@ -83,7 +83,7 @@ export class CheckinComponent implements OnInit {
 
             this.leafletOptions = {
               layers: [
-                tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' })
+                tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' })
               ],
               zoom: 14,
               center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
@@ -112,7 +112,7 @@ export class CheckinComponent implements OnInit {
           checkin => {
             this.leafletOptions = {
               layers: [
-                tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' })
+                tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' })
               ],
               zoom: 14,
               center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)

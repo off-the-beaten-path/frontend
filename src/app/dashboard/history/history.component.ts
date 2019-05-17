@@ -38,7 +38,7 @@ export class HistoryComponent implements OnInit {
 
               this.leafletOptions = {
                 layers: [
-                  tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
+                  tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
                 ],
                 zoom: 8,
                 center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
