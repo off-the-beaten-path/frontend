@@ -1,11 +1,11 @@
 export const environment = {
   VERSION: '0.1',
   production: true,
-  api: 'https://otbp-backend.tmk.name:8099',
-  whitelistedDomains: ['otbp-backend.tmk.name:8099'],
+  api: 'https://otbpbackend.tmk.name',
+  whitelistedDomains: ['otbpbackend.tmk.name'],
   blacklistedRoutes: [
-    'https://otbp-backend.tmk.name:8099/user/login',
-    'https://otbp-backend.tmk.name:8099/user/refresh',
-    'https://otbp-backend.tmk.name:8099/user/register',
+    'https://otbpbackend.tmk.name:8099/user/login',
+    'https://otbpbackend.tmk.name:8099/user/refresh',
+    'https://otbpbackend.tmk.name:8099/user/register',
   ]
 };
