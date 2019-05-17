@@ -49,7 +49,7 @@ export class GeolocationService {
           positionOptions
         );
 
-      return subject;
+      return subject.pipe(take(1));
     }
 
     return throwError('getCurrentPosition() unavailable');
@@ -57,7 +57,7 @@ export class GeolocationService {
 
   watchPosition(): Observable<ILatLngPosition> {
     if (null !== this.subject) {
-      return this.subject;
+      return this.subject.asObservable();
     } else if ('geolocation' in navigator) {
       this.subject = new ReplaySubject<ILatLngPosition>(1);
 
@@ -83,7 +83,7 @@ export class GeolocationService {
           positionOptions
         );
 
-      return this.subject;
+      return this.subject.asObservable();
     }
 
     return throwError('watchPosition() unavailable');

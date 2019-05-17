@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CheckInService } from '../../services/api/checkin.service';
 import { ICheckIn } from '../../models/checkin.model';
-import { Observable } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { latLng, tileLayer, marker, icon, Map } from 'leaflet';
 import { MatTabChangeEvent } from '@angular/material';
+import { GeolocationService } from '../../services/geolocation.service';
 
 @Component({
   selector: 'app-history',
@@ -19,43 +20,50 @@ export class HistoryComponent implements OnInit {
   public leafletLayers: any[] = null;
   public leafletMap: Map = null;
 
-  constructor(private checkInService: CheckInService) {
+  constructor(private checkInService: CheckInService,
+              private geolocationService: GeolocationService) {
   }
 
   ngOnInit() {
-    this.history$ = this.checkInService
-      .getAll()
+    this.history$ = zip(this.checkInService.getAll(), this.geolocationService.getCurrentPosition())
       .pipe(
-        map(
-          resp => {
-            return resp.items;
+        tap(
+          ([resp, position]) => {
+            const checkins = resp.items;
+
+            this.leafletOptions = {
+              layers: [
+                tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
+              ],
+              zoom: 8,
+              center: latLng(position.lat, position.lng)
+            };
+
+            this.leafletLayers = checkins.map(
+              c => marker([c.geocache.location.lat, c.geocache.location.lng], {
+                icon: icon({
+                  iconSize: [25, 41],
+                  iconAnchor: [13, 41],
+                  iconUrl: 'assets/marker-icon.png',
+                  shadowUrl: 'assets/marker-shadow.png'
+                })
+              })
+            );
+
+            // show a player icon at the player position
+            this.leafletLayers.push(
+              marker([position.lat, position.lng], {
+                icon: icon({
+                  iconSize: [44, 64],
+                  iconAnchor: [34, 54],
+                  iconUrl: 'assets/user-sprite.png'
+                })
+              })
+            );
           }
         ),
-        tap(
-          checkins => {
-            if (checkins.length > 0) {
-              const [checkin, ..._] = checkins;
-
-              this.leafletOptions = {
-                layers: [
-                  tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
-                ],
-                zoom: 8,
-                center: latLng(checkin.geocache.location.lat, checkin.geocache.location.lng)
-              };
-
-              this.leafletLayers = checkins.map(
-                c => marker([c.geocache.location.lat, c.geocache.location.lng], {
-                  icon: icon({
-                    iconSize: [25, 41],
-                    iconAnchor: [13, 41],
-                    iconUrl: 'assets/marker-icon.png',
-                    shadowUrl: 'assets/marker-shadow.png'
-                  })
-                })
-              );
-            }
-          }
+        map(
+          ([resp, _]) => resp.items
         )
       );
   }
