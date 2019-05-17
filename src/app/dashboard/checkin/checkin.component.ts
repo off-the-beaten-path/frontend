@@ -32,7 +32,7 @@ export class CheckinComponent implements OnInit {
               private route: ActivatedRoute,
               private authService: AuthService) {
     this.updateForm = new FormGroup({
-      text: new FormControl(),
+      text: new FormControl(''),
       image_id: new FormControl(null),
       checkin_id: new FormControl()
     });
