@@ -29,8 +29,9 @@
       </p>
     </mat-card-content>
 
-    <mat-card-actions *ngIf="!editing">
-      <button mat-button
+    <mat-card-actions *ngIf="!editing"
+                      fxLayout="row" fxLayoutAlign="center">
+      <button mat-stroked-button
               (click)="enterEditingMode()">Edit
       </button>
     </mat-card-actions>
@@ -45,11 +46,12 @@
       </form>
     </mat-card-content>
 
-    <mat-card-actions *ngIf="editing">
-      <button mat-button
+    <mat-card-actions *ngIf="editing"
+                      fxLayout="row" fxLayoutAlign="space-between">
+      <button mat-stroked-button
               (click)="updateCheckin()">Submit
       </button>
-      <button mat-button
+      <button mat-stroked-button
               (click)="exitEditingMode()">Cancel
       </button>
     </mat-card-actions>
