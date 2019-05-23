@@ -11,4 +11,5 @@ export interface ICheckIn {
   location: ILatLngPosition;
   text: string;
   created_at: number;
+  final_distance: number;
 }

@@ -1,50 +1,99 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="center center">
-  <span>You're On Your Way</span>
-</mat-toolbar>
-
-<div *ngIf="directions; else loader">
-  <mat-card>
-    <mat-card-header>
-    </mat-card-header>
-    <app-compass [rotation]="directions.compass"></app-compass>
-    <mat-card-content>
-      <div>
+<div [ngSwitch]="state">
+  <div *ngSwitchCase="'loading'">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          Loading
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
         <p>
-          Distance: {{ directions.distance | number:'1.1-1' }} meters
+          <strong>Note:</strong> You must allow location access for this app to work properly.
         </p>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <a *ngIf="closeEnough; else updateButton"
-         mat-button
-        (click)="doCheckIn()">
-        CheckIn
-      </a>
-      <ng-template #updateButton>
-        <button  (click)="onManualUpdate()" mat-button>
+
+        <mat-progress-bar
+          color="primary"
+          mode="indeterminate">
+        </mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngSwitchCase="'has-active'">
+    <mat-toolbar fxLayout="row" fxLayoutAlign="center center">
+      <span>You're On Your Way</span>
+    </mat-toolbar>
+
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <svg width="40" height="40" [identiconHash]="target.location.geohash"></svg>
+        </div>
+        <mat-card-title>
+          #{{ target.location.geohash }}
+        </mat-card-title>
+      </mat-card-header>
+      <app-compass [rotation]="directions.compass"></app-compass>
+      <mat-card-content>
+        <div>
+          <p>
+            Distance: {{ directions.distance | number:'1.1-1' }} meters
+          </p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+        <button *ngIf="closeEnough"
+           mat-stroked-button
+           (click)="doCheckIn()">
+          CheckIn
+        </button>
+        <button *ngIf="!closeEnough"
+                mat-stroked-button
+                (click)="onManualUpdate()">
           Update
         </button>
-      </ng-template>
-    </mat-card-actions>
-  </mat-card>
+        <button mat-stroked-button
+                (click)="createGeocache()">
+          New Target
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div *ngSwitchCase="'error'">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          Error
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <strong>Error:</strong> {{ error }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngSwitchCase="'does-not-have-active'">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Play</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <strong>You do not have an active target.</strong>
+        </p>
+
+        <mat-nav-list>
+          <a mat-list-item
+             (click)="createGeocache()">
+            <mat-icon matListIcon>play_circle_filled</mat-icon>
+            New Target
+          </a>
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
 </div>
-
-<ng-template #loader>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        Loading
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        <strong>Note:</strong> You must allow location access for this website to work properly.
-      </p>
-
-      <mat-progress-bar
-        color="primary"
-        mode="indeterminate">
-      </mat-progress-bar>
-    </mat-card-content>
-  </mat-card>
-</ng-template>

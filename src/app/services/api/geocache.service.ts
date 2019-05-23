@@ -12,8 +12,13 @@ export class GeoCacheService {
   constructor(private http: HttpClient) {
   }
 
-  public get(location: ILatLngPosition): Observable<IGeoCache> {
+  public get(): Observable<IGeoCache> {
     return this.http
-      .get<any>(`${environment.api}/geocache/${location.lat},${location.lng}`);
+      .get<any>(`${environment.api}/geocache/active`);
+  }
+
+  public create(loc: ILatLngPosition): Observable<IGeoCache> {
+    return this.http
+      .post<any>(`${environment.api}/geocache`, loc);
   }
 }

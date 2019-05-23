@@ -7,9 +7,10 @@ import { SettingsService } from '../../services/settings.service';
 import { Directions, IGeoCache, ILatLngPosition } from '../../models';
 
 import { Subscription, of, zip } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { CheckInService } from '../../services/api/checkin.service';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-play',
@@ -17,6 +18,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./play.component.css']
 })
 export class PlayComponent implements OnInit, OnDestroy {
+
+  public state: 'loading' | 'has-active' | 'does-not-have-active' | 'error' = 'loading';
+
+  public error: any = null;
 
   public directions: Directions = null;
   public target: IGeoCache = null;
@@ -34,17 +39,49 @@ export class PlayComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit() {
+    zip(
+      this.geoCacheService.get(),
+      this.locationService.getCurrentPosition()
+    )
+      .subscribe(
+        ([target, position]: [IGeoCache, ILatLngPosition]) => {
+          this.target = target;
+
+          this.updateDirections(position);
+
+          this.automaticUpdate();
+
+          this.state = 'has-active';
+        },
+        resp => {
+          if (resp && resp.error && resp.error.message === 'No active geocache') {
+            this.state = 'does-not-have-active';
+          } else {
+            this.state = 'error';
+
+            this.error = 'Unknown Error!';
+
+            if (resp.error && resp.error.message) {
+              // Backend 400-level error
+              this.error = resp.error.message;
+            } else if (resp.statusText) {
+              // Other kind of error (500, API offline, etc.)
+              this.error = resp.statusText;
+            }
+          }
+        }
+      );
+  }
+
+  public createGeocache(): void {
     this.locationService
       .getCurrentPosition()
       .pipe(
         switchMap(
-          position => {
-            return zip(
-              this.geoCacheService
-                .get(position),
-              of(position)
-            );
-          }
+          location => zip(
+            this.geoCacheService.create(location),
+            of(location)
+          )
         )
       )
       .subscribe(
@@ -54,16 +91,15 @@ export class PlayComponent implements OnInit, OnDestroy {
           this.updateDirections(position);
 
           this.automaticUpdate();
-        },
-        error => {
-          console.log('DirectionsComponent', error);
+
+          this.state = 'has-active';
         }
       );
   }
 
   public doCheckIn(): void {
     this.checkinService
-      .create(this.target, this.directions.end)
+      .create(this.target, this.directions.start)
       .subscribe(
         checkin => this.router.navigate(['/', 'dashboard', 'checkin', checkin.id])
       );
@@ -75,7 +111,7 @@ export class PlayComponent implements OnInit, OnDestroy {
       this.target.location
     );
 
-    if (this.directions.distance < 50) {
+    if (this.directions.distance < environment.checkinMaxDistance) {
       console.log('DirectionsComponent', 'Within reach!');
 
       if (false === this.closeEnough) {

@@ -1,5 +1,5 @@
 export const environment = {
-  VERSION: '0.1',
+  VERSION: '0.4',
   production: true,
   api: 'https://otbpapi.tmk.name',
   whitelistedDomains: ['otbpapi.tmk.name'],
@@ -7,5 +7,6 @@ export const environment = {
     'https://otbpapi.tmk.name/user/login',
     'https://otbpapi.tmk.name/user/refresh',
     'https://otbpapi.tmk.name/user/register',
-  ]
+  ],
+  checkinMaxDistance: 10
 };
