@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ResetComponent } from './reset/reset.component';
+import { ForgotComponent } from './forgot/forgot.component';
 
 const routes: Routes = [
   {
@@ -12,7 +14,15 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
-  }
+  },
+  {
+    path: 'forgot',
+    component: ForgotComponent
+  },
+  {
+    path: 'reset/:token',
+    component: ResetComponent
+  },
 ];
 
 @NgModule({
