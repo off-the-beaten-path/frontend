@@ -10,6 +10,7 @@ import { Subscription, of, zip } from 'rxjs';
 import { CheckInService } from '../../services/api/checkin.service';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-play',
@@ -110,7 +111,7 @@ export class PlayComponent implements OnInit, OnDestroy {
       this.target.location
     );
 
-    if (this.directions.distance < 50) {
+    if (this.directions.distance < environment.checkinMaxDistance) {
       console.log('DirectionsComponent', 'Within reach!');
 
       if (false === this.closeEnough) {

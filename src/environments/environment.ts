@@ -11,7 +11,8 @@ export const environment = {
     'http://localhost:5000/user/login',
     'http://localhost:5000/user/refresh',
     'http://localhost:5000/user/register',
-  ]
+  ],
+  checkinMaxDistance: 10
 };
 
 /*
