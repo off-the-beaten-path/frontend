@@ -7,7 +7,7 @@
       <mat-card-title>
         #{{ checkin.geocache.location.geohash }}
       </mat-card-title>
-      <mat-card-subtitle>{{ checkin.created_at | date }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ checkin.final_distance | number:'1.1-1' }} m | {{ checkin.created_at | date }}</mat-card-subtitle>
     </mat-card-header>
 
     <app-map [checkins]="[checkin]"

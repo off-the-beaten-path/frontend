@@ -33,6 +33,15 @@ export class ErrorInterceptorService implements HttpInterceptor {
                 message = resp.statusText;
               }
 
+              // Hack to prevent semantic error messages from showing a popup error
+              const whitelist = [
+                'No active geocache'
+              ];
+
+              if (whitelist.includes(message)) {
+                return;
+              }
+
               this.toastr.error(message, 'Error!', {
                 timeOut: 0
               });

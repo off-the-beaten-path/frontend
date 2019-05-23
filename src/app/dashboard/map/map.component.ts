@@ -5,8 +5,9 @@ import { Subscription } from 'rxjs';
 import { ICheckIn } from '../../models/checkin.model';
 
 // Tokyo, baby!
-const DEFAULT_LOCATION = latLng(40.6943, -73.9249);;
-const DEFAULT_ZOOM = 8;
+const DEFAULT_LOCATION = latLng(40.6943, -73.9249);
+const DEFAULT_ZOOM = 15;
+const USER_ZOOM = 10;
 
 @Component({
   selector: 'app-map',
@@ -29,7 +30,7 @@ export class MapComponent implements OnInit, OnDestroy {
       layers: [
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
       ],
-      zoom: 8,
+      zoom: DEFAULT_ZOOM,
       center
     };
 
@@ -83,7 +84,7 @@ export class MapComponent implements OnInit, OnDestroy {
             this.userMarker.setLatLng([position.lat, position.lng]);
 
             if (this.center === 'user') {
-              this.leafletMap.setView([position.lat, position.lng], DEFAULT_ZOOM);
+              this.leafletMap.setView([position.lat, position.lng], USER_ZOOM);
             }
           }
         )
