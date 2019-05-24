@@ -23,5 +23,6 @@ export class SidenavComponent implements OnInit {
 
   public logout() {
     this.authService.logout();
+    this.toggleSidenav.emit();
   }
 }

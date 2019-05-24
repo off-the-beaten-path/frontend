@@ -15,7 +15,9 @@
      routerLink="/"
      (click)="toggleSidenav.emit()">
     <mat-icon matListIcon>home</mat-icon>
-    Home
+    <h4 mat-line>
+      Home
+    </h4>
   </a>
 
   <a mat-list-item
@@ -23,7 +25,9 @@
      [routerLink]="['auth', 'login']"
      (click)="toggleSidenav.emit()">
     <mat-icon matListIcon>person</mat-icon>
-    Login
+    <h4 mat-line>
+      Login
+    </h4>
   </a>
 
   <a mat-list-item
@@ -31,7 +35,9 @@
      [routerLink]="['auth', 'register']"
      (click)="toggleSidenav.emit()">
     <mat-icon matListIcon>person_add</mat-icon>
-    Register
+    <h4 mat-line>
+      Register
+    </h4>
   </a>
 
   <a mat-list-item
@@ -39,7 +45,9 @@
      [routerLink]="['dashboard']"
      (click)="toggleSidenav.emit()">
     <mat-icon matListIcon>reply</mat-icon>
-    Dashboard
+    <h4 mat-line>
+      Dashboard
+    </h4>
   </a>
 
   <a mat-list-item
@@ -47,7 +55,9 @@
      [routerLink]="['dashboard', 'play']"
      (click)="toggleSidenav.emit()">
     <mat-icon matListIcon>play_circle_filled</mat-icon>
-    Play
+    <h4 mat-line>
+      Play
+    </h4>
   </a>
 
   <a mat-list-item
@@ -55,7 +65,9 @@
      [routerLink]="['dashboard', 'history']"
      (click)="toggleSidenav.emit()">
     <mat-icon matListIcon>history</mat-icon>
-    History
+    <h4 mat-line>
+      History
+    </h4>
   </a>
 
   <a mat-list-item
@@ -63,25 +75,40 @@
      [routerLink]="['dashboard', 'settings']"
      (click)="toggleSidenav.emit()">
     <mat-icon matListIcon>settings</mat-icon>
-    Settings
+    <h4 mat-line>
+      Settings
+    </h4>
   </a>
 
   <a mat-list-item
      *ngIf="user$ | async"
      routerLink="/"
-     (click)="logout() && toggleSidenav.emit()">
+     (click)="logout()">
     <mat-icon matListIcon>reply</mat-icon>
-    Logout
+    <h4 mat-line>
+      Logout
+    </h4>
   </a>
 
   <mat-divider></mat-divider>
+
+  <a mat-list-item
+     [routerLink]="['/', 'about']"
+     (click)="toggleSidenav.emit()">
+    <mat-icon matListIcon>info</mat-icon>
+    <h4 mat-line>
+      About
+    </h4>
+  </a>
 
   <a mat-list-item
      target="_blank"
      href="https://github.com/off-the-beaten-path"
      (click)="toggleSidenav.emit()">
     <mat-icon matListIcon>cake</mat-icon>
-    Github
+    <h4 mat-line>
+      Github
+    </h4>
   </a>
 
 </mat-nav-list>
