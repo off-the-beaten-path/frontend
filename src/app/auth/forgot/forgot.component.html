@@ -1,18 +1,17 @@
-<div id="login-container"
+<div id="forgot-container"
      fxLayout="column"
      fxLayoutAlign="center center">
   <mat-card>
     <mat-card-content>
       <form [formGroup]="form"
-            (ngSubmit)="login()">
+            (ngSubmit)="submit()">
 
-        <p class="mat-h2">Please Sign In</p>
+        <p class="mat-h2">Forgot Password</p>
 
         <p>
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input id="login-email"
-                   matInput
+            <input matInput
                    formControlName="email"
                    placeholder="you@email"
                    type="email">
@@ -20,24 +19,15 @@
           </mat-form-field>
         </p>
 
-        <p>
-          <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input id="login-password"
-                   matInput
-                   formControlName="password"
-                   placeholder="******"
-                   type="password">
-            <mat-icon matSuffix>vpn_key</mat-icon>
-          </mat-form-field>
+        <p *ngIf="hasSubmitted">
+          You will receive an email with further instructions.
         </p>
 
         <p>
-          <button id="login-submit"
-                  type="submit"
+          <button type="submit"
                   mat-stroked-button
                   [disabled]="form.invalid">
-            Login
+            Submit
           </button>
         </p>
       </form>
@@ -46,12 +36,8 @@
 
       <div style="margin-top: 2rem;" fxLayout="row" fxLayoutAlign="space-around center">
         <a mat-stroked-button
-           [routerLink]="['/', 'auth', 'register']">
-          Register
-        </a>
-        <a mat-stroked-button
-           [routerLink]="['/', 'auth', 'forgot']">
-          Forgot
+           [routerLink]="['/', 'auth', 'login']">
+          Login
         </a>
       </div>
     </mat-card-content>

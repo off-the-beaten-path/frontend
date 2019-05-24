@@ -20,6 +20,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 
 import { ErrorInterceptorService } from './services/error.interceptor.service';
 import { AuthService } from './services/auth.service';
+import { AboutComponent } from './about/about.component';
 
 
 export function jwtOptionsFactory(authService: AuthService) {
@@ -63,7 +64,8 @@ export function jwtOptionsFactory(authService: AuthService) {
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    SidenavComponent
+    SidenavComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

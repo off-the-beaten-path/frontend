@@ -1,0 +1,34 @@
+<div id="reset-container"
+     fxLayout="column"
+     fxLayoutAlign="center center">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form"
+            (ngSubmit)="submit()">
+
+        <p class="mat-h2">Reset Password</p>
+
+        <p>
+          <mat-form-field appearance="outline" hintLabel="Must be 10-32 characters">
+            <mat-label>Password</mat-label>
+            <input matInput
+                   formControlName="password"
+                   placeholder="******"
+                   type="password">
+            <mat-icon matSuffix>vpn_key</mat-icon>
+            <mat-hint align="end">{{ form.value.password?.length || 0 }}</mat-hint>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <button id="login-submit"
+                  type="submit"
+                  mat-stroked-button
+                  [disabled]="form.invalid">
+            Reset
+          </button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

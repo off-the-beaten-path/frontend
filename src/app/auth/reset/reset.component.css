@@ -1,0 +1,8 @@
+mat-card {
+  max-width: 280px;
+  text-align: center;
+}
+
+#reset-container {
+  min-height: 80vh;
+}

@@ -42,6 +42,15 @@
           </button>
         </p>
       </form>
+
+      <mat-divider></mat-divider>
+
+      <div style="margin-top: 2rem;" fxLayout="row" fxLayoutAlign="space-around center">
+        <a mat-stroked-button
+           [routerLink]="['/', 'auth', 'login']">
+          Login
+        </a>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

@@ -81,6 +81,39 @@ export class AuthService {
       );
   }
 
+  forgot(email: string): Observable<null> {
+    return this.http
+      .post<{}>(`${environment.api}/user/password/forgot`, {email})
+      .pipe(
+        tap(
+          () => this.toastr.success('Password reset email sent')
+        ),
+        map(
+          () => null
+        )
+      );
+  }
+
+  reset({password, token}: {password: string, token: string}): Observable<null> {
+    return this.http
+      .post<IAuthResponse>(`${environment.api}/user/password/reset`, {password, token})
+      .pipe(
+        tap(
+          next => {
+            if (next && next.jwt) {
+              localStorage.setItem('currentUser', JSON.stringify(next));
+              this.currentUserSubject.next(next);
+
+              this.toastr.success('Password changed successfully');
+            }
+          }
+        ),
+        map(
+          () => null
+        )
+      );
+  }
+
   refresh(): Observable<IAuthResponse> {
     return this.http
       .get<IAuthResponse>(

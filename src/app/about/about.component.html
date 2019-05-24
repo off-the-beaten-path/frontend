@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      About
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      Made with love by <a href="https://www.tmk.name/">Tristan</a>. Find the source on <a href="https://github.com/off-the-beaten-path">Github</a>.
+    </p>
+
+    <p>
+      This project could not have been completed without numerous open source projects, for which I am eternally grateful.
+    </p>
+
+    <mat-nav-list>
+      <h3 mat-subheader>Frontend</h3>
+      <a *ngFor="let dep of frontendDependencies"
+         mat-list-item
+        [href]="dep.href">
+        <mat-icon mat-list-icon>build</mat-icon>
+
+        <h4 mat-line>
+          {{ dep.name }}
+        </h4>
+      </a>
+
+      <mat-divider></mat-divider>
+
+      <h3 mat-subheader>Backend</h3>
+      <a *ngFor="let dep of backendDependencies"
+         mat-list-item
+         [href]="dep.href">
+        <mat-icon mat-list-icon>build</mat-icon>
+
+        <h4 mat-line>
+          {{ dep.name }}
+        </h4>
+      </a>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>
