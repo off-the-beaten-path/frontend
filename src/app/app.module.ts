@@ -21,6 +21,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ErrorInterceptorService } from './services/error.interceptor.service';
 import { AuthService } from './services/auth.service';
 import { AboutComponent } from './about/about.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 export function jwtOptionsFactory(authService: AuthService) {
@@ -85,7 +86,8 @@ export function jwtOptionsFactory(authService: AuthService) {
         deps: [AuthService]
       }
     }),
-    LeafletModule.forRoot()
+    LeafletModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true},
