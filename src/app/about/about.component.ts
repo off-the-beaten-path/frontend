@@ -9,15 +9,87 @@ export class AboutComponent implements OnInit {
 
   public frontendDependencies = [
     {
-      name: 'Flask',
-      href: 'http://flask.pocoo.org/'
+      name: 'Angular',
+      href: 'https://angular.io',
+      license: 'MIT'
+    },
+    {
+      name: 'Angular Material',
+      href: 'https://material.angular.io/',
+      license: 'MIT'
+    },
+    {
+      name: 'Leaflet',
+      href: 'https://leafletjs.com/',
+      license: 'BSD'
+    },
+    {
+      name: 'File Pond',
+      href: 'https://github.com/pqina/filepond',
+      license: 'MIT'
+    },
+    {
+      name: 'Jdenticon',
+      href: 'https://jdenticon.com/',
+      license: 'MIT'
+    },
+    {
+      name: 'ngx toastr',
+      href: 'https://github.com/scttcper/ngx-toastr',
+      license: 'MIT'
+    },
+    {
+      name: 'And many more!',
+      href: 'https://github.com/off-the-beaten-path/frontend/blob/master/package.json',
+      license: ''
     }
   ];
 
   public backendDependencies = [
     {
-      name: 'Angular',
-      href: 'https://angular.io'
+      name: 'Flask',
+      href: 'http://flask.pocoo.org/',
+      license: 'BSD'
+    },
+    {
+      name: 'Flask SQLAlchemy',
+      license: 'BSD',
+      href: 'http://flask-sqlalchemy.pocoo.org/2.3/'
+    },
+    {
+      name: 'flask-apispec',
+      href: 'https://github.com/jmcarp/flask-apispec',
+      license: 'MIT'
+    },
+    {
+      name: 'Flask Mail',
+      href: 'https://pythonhosted.org/Flask-Mail/',
+      license: 'BSD'
+    },
+    {
+      name: 'Marshmallow',
+      href: 'https://marshmallow.readthedocs.io/en/3.0/',
+      license: 'MIT'
+    },
+    {
+      name: 'flask-praetorian',
+      href: 'https://flask-praetorian.readthedocs.io/en/latest/',
+      license: 'MIT'
+    },
+    {
+      name: 'geopy',
+      href: 'https://geopy.readthedocs.io/en/stable/',
+      license: 'MIT'
+    },
+    {
+      name: 'jsonschema',
+      href: 'https://pypi.org/project/jsonschema/',
+      license: 'MIT'
+    },
+    {
+      name: 'And many more!',
+      href: 'https://github.com/off-the-beaten-path/backend/blob/master/requirements.txt',
+      license: ''
     }
   ];
 
