@@ -52,12 +52,7 @@ export class AuthService {
       .pipe(
         tap(
           next => {
-            if (next && next.jwt) {
-              localStorage.setItem('currentUser', JSON.stringify(next));
-              this.currentUserSubject.next(next);
-
-              this.toastr.success('Registration successful');
-            }
+              this.toastr.info('Registration successful. Please confirm your email address.');
           }
         ),
         map(
