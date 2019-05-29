@@ -40,6 +40,20 @@
         </h4>
         <p mat-line> {{ dep.license }} </p>
       </a>
+
+      <mat-divider></mat-divider>
+
+      <h3 mat-subheader>Media</h3>
+      <a *ngFor="let dep of mediaAttrs"
+         mat-list-item
+         [href]="dep.href">
+        <mat-icon mat-list-icon>perm_media</mat-icon>
+
+        <h4 mat-line>
+          {{ dep.name }}
+        </h4>
+        <p mat-line> {{ dep.license }} </p>
+      </a>
     </mat-nav-list>
   </mat-card-content>
 </mat-card>

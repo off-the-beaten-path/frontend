@@ -93,6 +93,24 @@ export class AboutComponent implements OnInit {
     }
   ];
 
+  public mediaAttrs = [
+    {
+      href: 'https://openclipart.org/detail/233063/compass-rose-2',
+      name: 'Compass',
+      license: ''
+    },
+    {
+      href: 'https://opengameart.org/content/16x16-person-sprite',
+      name: 'Player Sprite',
+      license: 'CC0'
+    },
+    {
+      href: 'https://www.openstreetmap.org/#map=5/38.007/-95.844',
+      name: 'OSM',
+      license: 'ODbL'
+    }
+  ];
+
   constructor() { }
 
   ngOnInit() {
