@@ -113,6 +113,11 @@ export class AboutComponent implements OnInit {
       href: 'http://clipart.nicubunu.ro/?gallery=rpg_map',
       name: 'Road Post',
       license: 'Public Domain'
+    },
+    {
+      href: 'http://mapkeyicons.com/',
+      name: 'Map Key Icons',
+      license: 'CC0 1.0 Universal'
     }
   ];
 

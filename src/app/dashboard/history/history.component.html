@@ -38,8 +38,7 @@
     </mat-tab>
     <mat-tab label="Map">
       <mat-card>
-        <app-map [checkins]="history"
-                 center="user"
+        <app-map [config]="{checkins: history, mode: 'geocache-only', center: 'user'}"
                  (mapReady)="onMapReady($event)"></app-map>
       </mat-card>
     </mat-tab>

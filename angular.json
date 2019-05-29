@@ -21,11 +21,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              {
-                "glob": "**/*",
-                "input": "./node_modules/leaflet/dist/images",
-                "output": "assets/"
-              },
               "src/manifest.json"
             ],
             "styles": [
