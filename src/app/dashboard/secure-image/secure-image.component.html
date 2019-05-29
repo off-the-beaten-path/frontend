@@ -1,14 +1,37 @@
-<div class="container">
-  <img *ngIf="(dataUrl$ | async) as src; else loader"
-       [src]="src"
-       mat-card-image>
+<div *ngIf="settings$ | async as settings"
+     class="container">
 
-  <button *ngIf="allowDelete"
-          (click)="delete.emit()"
-          mat-fab>
-    <mat-icon>delete</mat-icon>
-  </button>
+  <div *ngIf="settings.tapToLoadImages && !hasTapped"
+       class="tap-to-load"
+       fxLayout="row"
+       fxLayoutAlign="space-around center">
+    <button mat-stroked-button
+            (click)="hasTapped = true">
+      Load Image
+    </button>
+
+    <button *ngIf="allowDelete"
+            mat-stroked-button
+            color="warn"
+            (click)="delete.emit()">
+      Delete Image
+    </button>
+  </div>
+
+  <div *ngIf="!settings.tapToLoadImages || (settings.tapToLoadImages && hasTapped)">
+    <img *ngIf="(dataUrl$ | async) as src; else loader"
+         [src]="src"
+         mat-card-image>
+
+    <button *ngIf="allowDelete"
+            (click)="delete.emit()"
+            class="my-fab"
+            mat-fab>
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
 </div>
+
 <ng-template #loader>
   <mat-progress-bar
     color="primary"
