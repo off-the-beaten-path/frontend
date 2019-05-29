@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Verify Account</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+    <div *ngIf="hasError">
+      <h4>Something Went Wrong!</h4>
+      <p>
+        There has been an error. Please double check your link and confirm that your account has not already been
+        verified.
+      </p>
+    </div>
+
+    <mat-progress-bar *ngIf="isLoading"
+                      mode="indeterminate"
+                      color="primary"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>

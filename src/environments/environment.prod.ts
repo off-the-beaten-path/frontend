@@ -9,6 +9,7 @@ export const environment = {
     'https://otbpapi.tmk.name/user/register',
     'https://otbpapi.tmk.name/user/password/forgot',
     'https://otbpapi.tmk.name/user/password/reset',
+    'https://otbpapi.tmk.name/user/verify',
   ],
   checkinMaxDistance: 10
 };

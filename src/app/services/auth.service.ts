@@ -109,6 +109,26 @@ export class AuthService {
       );
   }
 
+  verifyAccount(token: string): Observable<IAuthResponse> {
+    return this.http
+      .post<IAuthResponse>(`${environment.api}/user/verify`, {token})
+      .pipe(
+        tap(
+          next => {
+            if (next && next.jwt) {
+              localStorage.setItem('currentUser', JSON.stringify(next));
+              this.currentUserSubject.next(next);
+
+              this.toastr.success('Account verified.');
+            }
+          }
+        ),
+        map(
+          () => null
+        )
+      );
+  }
+
   refresh(): Observable<IAuthResponse> {
     return this.http
       .get<IAuthResponse>(
