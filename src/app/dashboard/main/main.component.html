@@ -30,3 +30,35 @@
     </mat-nav-list>
   </mat-card-content>
 </mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      Your Stats
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-template #loader>
+      <mat-progress-bar color="primary"
+                 mode="indeterminate"></mat-progress-bar>
+    </ng-template>
+
+    <mat-list *ngIf="(stats$ | async) as stats; else loader">
+      <mat-list-item>
+        <mat-icon matListIcon>trending_up</mat-icon>
+        <h4 mat-line>{{ stats.current_streak }} days</h4>
+        <p mat-line>Current Streak</p>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListIcon>stars</mat-icon>
+        <h4 mat-line>{{ stats.num_checkins }}</h4>
+        <p mat-line># Check Ins</p>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListIcon>timeline</mat-icon>
+        <h4 mat-line>{{ stats.longest_streak }} days</h4>
+        <p mat-line>Longest Streak</p>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
