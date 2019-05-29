@@ -1,25 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
+import { ISettings } from '../../models';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit, OnDestroy {
-  public doConstantUpdates: null | boolean = null;
-
-  private doConstantUpdateSubscription: null | Subscription = null;
+export class SettingsComponent implements OnInit {
+  public settings$: Observable<ISettings> = null;
 
   public changePasswordForm: FormGroup = null;
   public deleteAccountForm: FormGroup = null;
 
-  constructor(private settings: SettingsService,
+  constructor(private settingsService: SettingsService,
               private authService: AuthService,
               private router: Router) {
     this.deleteAccountForm = new FormGroup({
@@ -33,23 +32,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.doConstantUpdateSubscription = this.settings
-      .doConstantUpdateEvents
-      .subscribe(
-        value => {
-          this.doConstantUpdates = value;
-        }
-      );
+    this.settings$ = this.settingsService.observe();
   }
 
-  ngOnDestroy() {
-    if (null !== this.doConstantUpdateSubscription) {
-      this.doConstantUpdateSubscription.unsubscribe();
-    }
-  }
-
-  toggleDoConstantUpdates() {
-    this.settings.doConstantUpdate = !this.doConstantUpdates;
+  updateSettings(key: string, value: any): void {
+    this.settingsService.update({
+      [key]: value
+    });
   }
 
   onDeleteAccount(): void {

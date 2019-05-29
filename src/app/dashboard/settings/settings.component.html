@@ -5,19 +5,29 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <section>
+    <section *ngIf="settings$ | async as settings">
 
       <h4>Options</h4>
 
       <mat-slide-toggle
-        *ngIf="doConstantUpdates !== null"
-        (change)="toggleDoConstantUpdates()"
-        [checked]="doConstantUpdates"
+        (change)="updateSettings('doConstantUpdates', !settings.doConstantUpdates)"
+        [checked]="settings.doConstantUpdates"
         color="primary">
-        Update in Background?
+        Update in Background
       </mat-slide-toggle>
       <p>
         (Note: consumes more battery)
+      </p>
+
+      <mat-slide-toggle
+        (change)="updateSettings('tapToLoadImages', !settings.tapToLoadImages)"
+        [checked]="settings.tapToLoadImages"
+        color="primary">
+        Tap to Load Images
+      </mat-slide-toggle>
+
+      <p>
+        (Note: helps with cellular data usage)
       </p>
     </section>
 
@@ -31,7 +41,8 @@
         The destination resets every day at midnight EST.
       </p>
       <p>
-        We do not store your location data. This project is licensed GPLv3+. This means you have the right to view the
+        We only store your location data for check ins. Deleting your account removes all data associated with your account.
+        This project is licensed GPLv3+. This means you have the right to view the
         source code, modify the source code, run your modified source code, and distribute the original code and your
         modifications freely. Check out the <a href="https://github.com/off-the-beaten-path">Github</a> for
         more information.
