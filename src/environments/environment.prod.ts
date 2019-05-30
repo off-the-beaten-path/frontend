@@ -1,5 +1,5 @@
 export const environment = {
-  VERSION: '0.6',
+  VERSION: '0.7',
   production: true,
   api: 'https://otbpapi.tmk.name',
   whitelistedDomains: ['otbpapi.tmk.name'],

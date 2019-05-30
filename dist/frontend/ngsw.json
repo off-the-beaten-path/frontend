@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1559159419564,
+  "timestamp": 1559236174119,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -8,16 +8,16 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/1.e4adc2f3153f890be1fc.js",
-        "/6.9e8753eb79f8f871301b.js",
-        "/7.8aa2e8be32513751d6b0.js",
+        "/6.06b549aff371a8725403.js",
+        "/7.351ee4c008bf117a2c4d.js",
+        "/common.6780dacdcba97a0db8df.js",
         "/es2015-polyfills.a2ecefcd0a7d47bb72d4.js",
         "/favicon.ico",
         "/index.html",
-        "/main.c066cdd36888ac96e33b.js",
+        "/main.6a3c1ebd0f74b4d1a2dc.js",
         "/polyfills.481858ef51fe27531859.js",
-        "/runtime.bcb7853e55915fa6b4d1.js",
-        "/styles.37713ed244d05ac0f3b3.css"
+        "/runtime.37d7345e0e888b0353f8.js",
+        "/styles.7def89284e694c487942.css"
       ],
       "patterns": []
     },
@@ -32,6 +32,7 @@
         "/MaterialIcons-Regular.e79bfd88537def476913.eot",
         "/assets/compass-dial.png",
         "/assets/compass.svg",
+        "/assets/icons/apple-touch-icon.png",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
@@ -53,15 +54,15 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/1.e4adc2f3153f890be1fc.js": "0ca07386a5f2507ec72e9143f24dfb433ba35551",
-    "/6.9e8753eb79f8f871301b.js": "f4d7f9e86a06aa94075bbc1613f5102e84715842",
-    "/7.8aa2e8be32513751d6b0.js": "1c39bb0af505b5969bdd24f90f8794c25b23da22",
+    "/6.06b549aff371a8725403.js": "c6324513f0b0c3f730fe04e55d38fea3fb579006",
+    "/7.351ee4c008bf117a2c4d.js": "6a4f1e27d8b8e88856164632be1fd26dcbd9a755",
     "/MaterialIcons-Regular.012cf6a10129e2275d79.woff": "c6c953c2ccb2ca9abb21db8dbf473b5a435f0082",
     "/MaterialIcons-Regular.570eb83859dc23dd0eec.woff2": "09963592e8c953cc7e14e3fb0a5b05d5042e8435",
     "/MaterialIcons-Regular.a37b0c01c0baf1888ca8.ttf": "fc05de31234e0090f7ddc28ce1b23af4026cb1da",
     "/MaterialIcons-Regular.e79bfd88537def476913.eot": "26fb8cecb5512223277b4d290a24492a0f09ede1",
     "/assets/compass-dial.png": "b852b128d4adece280068f7c9b638f78ce9cd65b",
     "/assets/compass.svg": "40ceddb7f0577e36180f930a9d6ff97f61791258",
+    "/assets/icons/apple-touch-icon.png": "7077e66e804a1d6199bacdd4a402b9ace412d022",
     "/assets/icons/icon-128x128.png": "d4733f10d9c5abc597fcd424526cb92a8d13e229",
     "/assets/icons/icon-144x144.png": "982d567dd3935bb8f97a72633f72a989daa29c4e",
     "/assets/icons/icon-152x152.png": "d2fb0cdeed04dc479c817af7a559fc972e2bc91f",
@@ -74,16 +75,17 @@
     "/assets/markers/flag.png": "a8011aa226ad2c3f79fa578bbc8eeb92c07692bc",
     "/assets/markers/marker.png": "3ad61b75411b5552af79ab725e2b82bb6faf8be8",
     "/assets/user-sprite.png": "1650ca759535d35839cb3bce74e3654f7e720336",
+    "/common.6780dacdcba97a0db8df.js": "b3c02097270fb39552789fbd06169dd58354c634",
     "/es2015-polyfills.a2ecefcd0a7d47bb72d4.js": "ddc4884f07efd3b0454e560ff8808c45a7fd49d0",
     "/favicon.ico": "4ac1363a61f297034bf95602ab8730b8e2f2c9d5",
-    "/index.html": "d52d27aaa9bc30e1606748b38c3367d161fa1406",
+    "/index.html": "4a2f4d1cbc5a896bcfdff0ea52eb77c3faa2fa2f",
     "/layers-2x.4f0283c6ce28e888000e.png": "152a162333e46d24f9d89f566312fc0c64011dee",
     "/layers.a6137456ed160d760698.png": "c9e7528e491a39232ba24a2706c6c739d6fb0f06",
-    "/main.c066cdd36888ac96e33b.js": "748e05531079d3d34a19acc76f48071ab85d5b6d",
+    "/main.6a3c1ebd0f74b4d1a2dc.js": "b12ad9a79578d969db29159bf9ce2b7035f7eab3",
     "/marker-icon.2273e3d8ad9264b7daa5.png": "60a90bcbb2b42b7ddb4556db94eb7c1084b0e5da",
     "/polyfills.481858ef51fe27531859.js": "ef448ddee57ecea8f1f0157e9e684b2c871e2e39",
-    "/runtime.bcb7853e55915fa6b4d1.js": "c099a721b69e8a7c92a869b39efd669e15f20663",
-    "/styles.37713ed244d05ac0f3b3.css": "0281f29a81d2ae42938803c48e821c0dad584126"
+    "/runtime.37d7345e0e888b0353f8.js": "17addc1f5908ce43df22877c4846138f7656227b",
+    "/styles.7def89284e694c487942.css": "3cda85d2121eefa3c4b046f1708b8059c0980452"
   },
   "navigationUrls": [
     {
