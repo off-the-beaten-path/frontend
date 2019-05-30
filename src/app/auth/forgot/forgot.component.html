@@ -19,9 +19,13 @@
           </mat-form-field>
         </p>
 
-        <p *ngIf="hasSubmitted">
-          You will receive an email with further instructions.
-        </p>
+        <div *ngIf="hasSubmitted"
+             fxLayout="row">
+          <mat-icon>warning</mat-icon>
+          <span>
+            You will receive an email with further instructions.
+          </span>
+        </div>
 
         <p>
           <button type="submit"

@@ -28,49 +28,44 @@ export class PlayComponent implements OnInit, OnDestroy {
 
   public closeEnough = false;
 
-  private automaticUpdateSubscription: null | Subscription = null;
-  private doAutomaticUpdateSubscription: null | Subscription = null;
+  private subs: Subscription[] = [];
 
   constructor(private locationService: GeolocationService,
               private geoCacheService: GeoCacheService,
-              private settings: SettingsService,
+              private settingsService: SettingsService,
               private checkinService: CheckInService,
               private router: Router) {
   }
 
   public ngOnInit() {
-    zip(
-      this.geoCacheService.get(),
-      this.locationService.getCurrentPosition()
-    )
-      .subscribe(
-        ([target, position]: [IGeoCache, ILatLngPosition]) => {
-          this.target = target;
+    this.subs.push(
+      zip(
+        this.geoCacheService.get(),
+        this.locationService.getCurrentPosition()
+      )
+        .subscribe(
+          ([target, position]: [IGeoCache, ILatLngPosition]) => {
+            this.initializeState(target, position);
+          },
+          resp => {
+            if (resp && resp.error && resp.error.message === 'No active geocache') {
+              this.state = 'does-not-have-active';
+            } else {
+              this.state = 'error';
 
-          this.updateDirections(position);
+              this.error = 'Unknown Error!';
 
-          this.automaticUpdate();
-
-          this.state = 'has-active';
-        },
-        resp => {
-          if (resp && resp.error && resp.error.message === 'No active geocache') {
-            this.state = 'does-not-have-active';
-          } else {
-            this.state = 'error';
-
-            this.error = 'Unknown Error!';
-
-            if (resp.error && resp.error.message) {
-              // Backend 400-level error
-              this.error = resp.error.message;
-            } else if (resp.statusText) {
-              // Other kind of error (500, API offline, etc.)
-              this.error = resp.statusText;
+              if (resp.error && resp.error.message) {
+                // Backend 400-level error
+                this.error = resp.error.message;
+              } else if (resp.statusText) {
+                // Other kind of error (500, API offline, etc.)
+                this.error = resp.statusText;
+              }
             }
           }
-        }
-      );
+        )
+    );
   }
 
   public createGeocache(): void {
@@ -86,15 +81,19 @@ export class PlayComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         ([target, position]: [IGeoCache, ILatLngPosition]) => {
-          this.target = target;
-
-          this.updateDirections(position);
-
-          this.automaticUpdate();
-
-          this.state = 'has-active';
+          this.initializeState(target, position);
         }
       );
+  }
+
+  public initializeState(target: IGeoCache, currentPosition: ILatLngPosition): void {
+    this.target = target;
+
+    this.updateDirections(currentPosition);
+
+    this.enableAutomaticWatch();
+
+    this.state = 'has-active';
   }
 
   public doCheckIn(): void {
@@ -123,13 +122,8 @@ export class PlayComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    if (null !== this.automaticUpdateSubscription) {
-      this.automaticUpdateSubscription.unsubscribe();
-      this.locationService.stopWatching();
-    }
-
-    if (null !== this.doAutomaticUpdateSubscription) {
-      this.doAutomaticUpdateSubscription.unsubscribe();
+    for (const sub of this.subs) {
+      sub.unsubscribe();
     }
   }
 
@@ -144,30 +138,18 @@ export class PlayComponent implements OnInit, OnDestroy {
       );
   }
 
-  public automaticUpdate() {
-    this.doAutomaticUpdateSubscription = this.settings
-      .doConstantUpdateEvents
-      .subscribe(
-        value => {
-          if (value) {
-            if (null !== this.automaticUpdateSubscription) {
-              this.automaticUpdateSubscription.unsubscribe();
-              this.locationService.stopWatching();
-            }
+  public enableAutomaticWatch() {
+    const settings = this.settingsService.currentValue();
 
-            this.automaticUpdateSubscription = this.locationService
-              .watchPosition()
-              .subscribe(
-                position => this.updateDirections(position)
-              );
-          } else {
-            if (null !== this.automaticUpdateSubscription) {
-              this.automaticUpdateSubscription.unsubscribe();
-              this.automaticUpdateSubscription = null;
-              this.locationService.stopWatching();
+    if (settings.doConstantUpdates) {
+      this.subs.push(
+        this.locationService.watchPosition()
+          .subscribe(
+            location => {
+              this.updateDirections(location);
             }
-          }
-        }
+          )
       );
+    }
   }
 }

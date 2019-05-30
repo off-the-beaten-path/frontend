@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ForgotComponent } from './forgot/forgot.component';
 import { ResetComponent } from './reset/reset.component';
+import { VerifyComponent } from './verify/verify.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ResetComponent } from './reset/reset.component';
     LoginComponent,
     RegisterComponent,
     ForgotComponent,
-    ResetComponent
+    ResetComponent,
+    VerifyComponent
   ]
 })
 export class AuthModule {

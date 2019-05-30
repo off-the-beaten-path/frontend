@@ -1,13 +1,18 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { icon, latLng, Map, Marker, marker, tileLayer } from 'leaflet';
+import { icon, latLng, Map, Marker, marker, polyline, tileLayer } from 'leaflet';
 import { GeolocationService } from '../../services/geolocation.service';
-import { Subscription } from 'rxjs';
 import { ICheckIn } from '../../models/checkin.model';
 
 // Tokyo, baby!
 const DEFAULT_LOCATION = latLng(40.6943, -73.9249);
 const DEFAULT_ZOOM = 15;
 const USER_ZOOM = 10;
+
+export interface IMapConfig {
+  checkins: ICheckIn[];
+  center: 'user' | 'checkin';
+  mode: 'include-checkin' | 'geocache-only';
+}
 
 @Component({
   selector: 'app-map',
@@ -19,51 +24,79 @@ export class MapComponent implements OnInit, OnDestroy {
   @Output()
   public mapReady = new EventEmitter<Map>();
 
-  @Input()
-  public center: 'user' | 'checkin' = 'user';
+  private mapConfig: IMapConfig = null;
 
   @Input()
-  public set checkins(checkins: ICheckIn[]) {
-    const center = latLng(checkins[0].geocache.location.lat, checkins[0].geocache.location.lng);
+  public set config(config: IMapConfig) {
+    if (config) {
+      this.mapConfig = config;
 
-    this.leafletOptions = {
-      layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
-      ],
-      zoom: DEFAULT_ZOOM,
-      center
-    };
+      const checkins = config.checkins;
 
-    this.leafletLayers = checkins.map(
-      c => marker([c.geocache.location.lat, c.geocache.location.lng], {
+      const center = latLng(checkins[0].geocache.location.lat, checkins[0].geocache.location.lng);
+
+      this.leafletOptions = {
+        layers: [
+          tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
+        ],
+        zoom: DEFAULT_ZOOM,
+        center
+      };
+
+      const geocacheMarkerSettings = {
         icon: icon({
-          iconSize: [25, 41],
-          iconAnchor: [13, 41],
-          iconUrl: 'assets/marker-icon.png',
-          shadowUrl: 'assets/marker-shadow.png'
+          iconSize: [48, 48],
+          iconAnchor: [24, 48],
+          iconUrl: 'assets/markers/marker.png'
         })
-      })
-    );
+      };
 
-    this.leafletLayers.push(
-      this.userMarker
-    );
+      const checkinMarkerSettings = {
+        icon: icon({
+          iconSize: [48, 48],
+          iconAnchor: [16, 48],
+          iconUrl: 'assets/markers/flag.png'
+        })
+      };
+
+      // always display the geocache markers
+      this.leafletLayers = checkins.map(
+        c => marker([c.geocache.location.lat, c.geocache.location.lng], geocacheMarkerSettings)
+      );
+
+      // include checkin markers and line between checkin/geocache when set
+      if (config.mode === 'include-checkin') {
+        this.leafletLayers = this.leafletLayers.concat(
+          checkins.map(
+            c => marker([c.location.lat, c.location.lng], checkinMarkerSettings)
+          )
+        );
+
+        this.leafletLayers = this.leafletLayers.concat(
+          checkins.map(
+            c => polyline([[c.location.lat, c.location.lng], [c.geocache.location.lat, c.geocache.location.lng]], {color: 'red'})
+          )
+        );
+      }
+
+      this.leafletLayers.push(
+        this.userMarker
+      );
+    }
   }
 
   public leafletOptions: any = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: 'Open Street Map'})
     ],
-    zoom: 14,
-    center: latLng(40.6943, -73.9249)
+    zoom: DEFAULT_ZOOM,
+    center: DEFAULT_LOCATION
   };
 
   public leafletLayers: any[] = [];
   private userMarker: Marker = null;
 
   public leafletMap: Map = null;
-
-  private subscriptions: Subscription[] = [];
 
   constructor(private geolocationService: GeolocationService) {
     this.userMarker = marker([DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng], {
@@ -76,25 +109,20 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscriptions.push(
-      this.geolocationService
-        .getCurrentPosition()
-        .subscribe(
-          position => {
-            this.userMarker.setLatLng([position.lat, position.lng]);
+    this.geolocationService
+      .getCurrentPosition()
+      .subscribe(
+        position => {
+          this.userMarker.setLatLng([position.lat, position.lng]);
 
-            if (this.center === 'user') {
-              this.leafletMap.setView([position.lat, position.lng], USER_ZOOM);
-            }
+          if (this.mapConfig && this.mapConfig.center === 'user') {
+            this.leafletMap.setView([position.lat, position.lng], USER_ZOOM);
           }
-        )
-    );
+        }
+      );
   }
 
   ngOnDestroy(): void {
-    for (const sub of this.subscriptions) {
-      sub.unsubscribe();
-    }
   }
 
   onMapReady(m: Map): void {

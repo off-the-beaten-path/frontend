@@ -3,7 +3,8 @@
      fxLayoutAlign="center center">
   <mat-card>
     <mat-card-content>
-      <form [formGroup]="form"
+      <form *ngIf="!hasSubmitted"
+            [formGroup]="form"
             (ngSubmit)="register()">
 
         <p class="mat-h2">Create an Account</p>
@@ -42,6 +43,15 @@
           </button>
         </p>
       </form>
+
+      <div *ngIf="hasSubmitted"
+           style="margin-top: 1rem; margin-bottom: 1rem;"
+           fxLayout="row">
+        <mat-icon>warning</mat-icon>
+        <span>
+            You will receive an email with further instructions.
+          </span>
+      </div>
 
       <mat-divider></mat-divider>
 

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -12,8 +11,9 @@ export class RegisterComponent implements OnInit {
 
   public form: FormGroup = null;
 
+  public hasSubmitted = false;
+
   constructor(private fb: FormBuilder,
-              private router: Router,
               private authService: AuthService) {
   }
 
@@ -28,7 +28,9 @@ export class RegisterComponent implements OnInit {
     this.authService
       .register(this.form.value)
       .subscribe(
-        () => this.router.navigate(['dashboard'])
+        () => {
+          this.hasSubmitted = true;
+        }
       );
   }
 }

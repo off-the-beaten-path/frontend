@@ -2,10 +2,14 @@
   margin-top: auto !important;
 }
 
-button {
+.my-fab {
   position: absolute;
   right: 1rem;
   bottom: 3rem;
+}
+
+.tap-to-load {
+  margin-bottom: 1rem;
 }
 
 .container {

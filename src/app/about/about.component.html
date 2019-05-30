@@ -6,7 +6,8 @@
   </mat-card-header>
   <mat-card-content>
     <p>
-      Made with love by <a href="https://www.tmk.name/">Tristan</a>. Find the source on <a href="https://github.com/off-the-beaten-path">Github</a>.
+      Made with love by <a href="https://www.tmk.name/">Tristan</a>. This project is licensed GPLv3+.
+      Find the source on <a href="https://github.com/off-the-beaten-path">Github</a>.
     </p>
 
     <p>
@@ -23,6 +24,7 @@
         <h4 mat-line>
           {{ dep.name }}
         </h4>
+        <p mat-line> {{ dep.license }} </p>
       </a>
 
       <mat-divider></mat-divider>
@@ -36,6 +38,21 @@
         <h4 mat-line>
           {{ dep.name }}
         </h4>
+        <p mat-line> {{ dep.license }} </p>
+      </a>
+
+      <mat-divider></mat-divider>
+
+      <h3 mat-subheader>Media</h3>
+      <a *ngFor="let dep of mediaAttrs"
+         mat-list-item
+         [href]="dep.href">
+        <mat-icon mat-list-icon>perm_media</mat-icon>
+
+        <h4 mat-line>
+          {{ dep.name }}
+        </h4>
+        <p mat-line> {{ dep.license }} </p>
       </a>
     </mat-nav-list>
   </mat-card-content>

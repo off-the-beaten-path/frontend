@@ -146,6 +146,9 @@ MIT
 @angular/router
 MIT
 
+@angular/service-worker
+MIT
+
 @asymmetrik/ngx-leaflet
 MIT
 The MIT License (MIT)

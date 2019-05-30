@@ -10,8 +10,7 @@
       <mat-card-subtitle>{{ checkin.final_distance | number:'1.1-1' }} m | {{ checkin.created_at | date }}</mat-card-subtitle>
     </mat-card-header>
 
-    <app-map [checkins]="[checkin]"
-             center="checkin"></app-map>
+    <app-map [config]="{checkins: [checkin], mode: 'include-checkin', center: 'checkin'}"></app-map>
 
     <app-secure-image *ngIf="null !== checkin.image && !hasDeletedImage"
                       [image]="checkin.image"
