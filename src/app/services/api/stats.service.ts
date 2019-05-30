@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUserStats } from '../../models';
+import { IGlobalStats, IUserStats } from '../../models';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -15,4 +15,10 @@ export class StatsService {
   public get(): Observable<IUserStats> {
     return this.http
       .get<IUserStats>(`${environment.api}/stats/`);
-  }}
+  }
+
+  public getGlobal(): Observable<IGlobalStats> {
+    return this.http
+      .get<IGlobalStats>(`${environment.api}/stats/global/`);
+  }
+}

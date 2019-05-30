@@ -14,6 +14,7 @@ export const environment = {
     'http://localhost:5000/user/password/forgot',
     'http://localhost:5000/user/password/reset',
     'http://localhost:5000/user/verify',
+    'http://localhost:5000/stats/global/',
   ],
   checkinMaxDistance: 10
 };

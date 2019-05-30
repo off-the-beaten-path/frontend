@@ -1,23 +1,44 @@
-<div fxLayout="row">
-  <div fxFlex="100"
-       fxLayout="column"
-       fxLayoutAlign="end center">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>About the Game</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>
-          Welcome to <strong>Off the Beaten Path</strong>. Your mission is
-          to boldly go where no one has gone before. You are tasked with trekking to
-          a random, nearby location. Once there, record your success with a photo and text, and rejoice
-          in a job well done. At the end of the day, review your glorious past successes.
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <a class="login" routerLink="/auth/login" mat-stroked-button>Login</a>
-        <a class="register" routerLink="/auth/register" mat-stroked-button>Register</a>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-</div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>About the Game</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      Welcome to <strong>Off the Beaten Path</strong>. Your mission is
+      to boldly go where no one has gone before. You are tasked with trekking to
+      a random, nearby location. Once there, record your success with a photo and text, and rejoice
+      in a job well done. At the end of the day, review your glorious past successes.
+    </p>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+    <a class="login" routerLink="/auth/login" mat-stroked-button>Login</a>
+    <a class="register" routerLink="/auth/register" mat-stroked-button>Register</a>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      Global Stats
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-template #loader>
+      <mat-progress-bar color="primary"
+                        mode="indeterminate"></mat-progress-bar>
+    </ng-template>
+
+    <mat-list *ngIf="(stats$ | async) as stats; else loader">
+      <mat-list-item>
+        <mat-icon matListIcon>stars</mat-icon>
+        <h4 mat-line>{{ stats.num_checkins }}</h4>
+        <p mat-line># Check Ins</p>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListIcon>people</mat-icon>
+        <h4 mat-line>{{ stats.num_players }}</h4>
+        <p mat-line># Players</p>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
