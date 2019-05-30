@@ -1,50 +1,50 @@
-<div *ngIf="(history$ | async) as history; else loader">
+<div *ngIf="pagedCheckins; else loader">
 
-  <mat-tab-group *ngIf="history.length > 0"
+  <mat-tab-group *ngIf="pagedCheckins.length > 0"
                  mat-align-tabs="center"
                  mat-stretch-tabs
                  dynamicHeight
                  (selectedTabChange)="onSelectedTabChange($event)">
     <mat-tab label="List">
-      <mat-card *ngFor="let checkin of history">
-        <mat-card-header>
-          <div mat-card-avatar>
-            <svg width="40" height="40" [identiconHash]="checkin.geocache.location.geohash"></svg>
-          </div>
-          <mat-card-title>
-            #{{ checkin.geocache.location.geohash }}
-          </mat-card-title>
-          <mat-card-subtitle>{{ checkin.final_distance | number:'1.1-1' }} m | {{ checkin.created_at | date }}</mat-card-subtitle>
-        </mat-card-header>
+      <div infiniteScroll
+           [infiniteScrollDistance]="1"
+           [infiniteScrollThrottle]="150"
+           (scrolled)="onScroll()">
+        <mat-card *ngFor="let checkin of pagedCheckins">
+          <mat-card-header>
+            <div mat-card-avatar>
+              <svg width="40" height="40" [identiconHash]="checkin.geocache.location.geohash"></svg>
+            </div>
+            <mat-card-title>
+              #{{ checkin.geocache.location.geohash }}
+            </mat-card-title>
+            <mat-card-subtitle>{{ checkin.final_distance | number:'1.1-1' }} m | {{ checkin.created_at | date }}</mat-card-subtitle>
+            <a mat-icon-button
+               class="my-header-fab"
+               [routerLink]="['/', 'dashboard', 'checkin', checkin.id]">
+              <mat-icon>subdirectory_arrow_right</mat-icon>
+            </a>
+          </mat-card-header>
 
-        <app-secure-image *ngIf="null !== checkin.image"
-                          [image]="checkin.image"></app-secure-image>
-        <mat-card-content>
-          <p>
-            {{ checkin.text }}
-          </p>
-        </mat-card-content>
-        <mat-card-actions fxLayout="row" fxLayoutAlign="center">
-          <a [routerLink]="['/', 'dashboard', 'checkin', checkin.id]"
-             mat-stroked-button>
-            Details
-          </a>
-        </mat-card-actions>
-      </mat-card>
-
-      <mat-card *ngIf="history.length === 0">
-        No results.
-      </mat-card>
+          <app-secure-image *ngIf="null !== checkin.image"
+                            [image]="checkin.image"></app-secure-image>
+          <mat-card-content>
+            <p>
+              {{ checkin.text }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </mat-tab>
     <mat-tab label="Map">
       <mat-card>
-        <app-map [config]="{checkins: history, mode: 'geocache-only', center: 'user'}"
+        <app-map [config]="{checkins: allCheckins, mode: 'geocache-only', center: 'user'}"
                  (mapReady)="onMapReady($event)"></app-map>
       </mat-card>
     </mat-tab>
   </mat-tab-group>
 
-  <mat-card *ngIf="history.length === 0">
+  <mat-card *ngIf="pagedCheckins.length === 0">
     You have to make history before you can read about it!
   </mat-card>
 </div>

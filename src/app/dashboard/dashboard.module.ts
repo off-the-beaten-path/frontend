@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { FilePondModule, registerPlugin } from 'ngx-filepond';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
@@ -43,7 +44,8 @@ registerPlugin(FilePondPluginImagePreview);
     HttpClientModule,
     ToastrModule,
     FilePondModule,
-    LeafletModule
+    LeafletModule,
+    InfiniteScrollModule
   ]
 })
 export class DashboardModule { }

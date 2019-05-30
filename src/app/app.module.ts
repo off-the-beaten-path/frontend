@@ -13,15 +13,17 @@ import { ToastrModule } from 'ngx-toastr';
 import { JWT_OPTIONS, JwtHelperService, JwtModule } from '@russon77/angular-jwt';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
 import { ErrorInterceptorService } from './services/error.interceptor.service';
+
 import { AuthService } from './services/auth.service';
 import { AboutComponent } from './about/about.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 export function jwtOptionsFactory(authService: AuthService) {
@@ -87,6 +89,7 @@ export function jwtOptionsFactory(authService: AuthService) {
       }
     }),
     LeafletModule.forRoot(),
+    InfiniteScrollModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

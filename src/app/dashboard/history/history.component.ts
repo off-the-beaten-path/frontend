@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CheckInService } from '../../services/api/checkin.service';
 import { ICheckIn } from '../../models/checkin.model';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Map } from 'leaflet';
 import { MatTabChangeEvent } from '@angular/material';
+
+const INITIAL_LIST_SIZE = 5;
+const LIST_GROWTH = 5;
 
 @Component({
   selector: 'app-history',
@@ -13,19 +14,32 @@ import { MatTabChangeEvent } from '@angular/material';
 })
 export class HistoryComponent implements OnInit {
 
-  public history$: Observable<ICheckIn[]> = null;
+  public allCheckins: ICheckIn[] = null;
 
-  public leafletMap: Map = null;
+  private pagedCheckinsCache: ICheckIn[] = null;
+  public pagedCheckins: ICheckIn[] = null;
+
+  private leafletMap: Map = null;
 
   constructor(private checkInService: CheckInService) {
   }
 
   ngOnInit() {
-    this.history$ = this.checkInService.getAll()
-      .pipe(
-        map(
-          resp => resp.items
-        )
+    this.checkInService
+      .getAll()
+      .subscribe(
+        resp => {
+          // Make another copy of the array because we will be splicing the cached array
+          this.allCheckins = [
+            ...resp.items
+          ];
+
+          this.pagedCheckinsCache = [
+            ...resp.items
+          ];
+
+          this.pagedCheckins = this.pagedCheckinsCache.splice(0, INITIAL_LIST_SIZE);
+        }
       );
   }
 
@@ -36,5 +50,11 @@ export class HistoryComponent implements OnInit {
 
   onMapReady(m: Map): void {
     this.leafletMap = m;
+  }
+
+  onScroll() {
+    this.pagedCheckins = this.pagedCheckins.concat(
+      this.pagedCheckinsCache.splice(0, LIST_GROWTH)
+    );
   }
 }

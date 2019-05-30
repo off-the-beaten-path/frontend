@@ -38,6 +38,7 @@
     "leaflet": "^1.5.1",
     "material-design-icons": "^3.0.1",
     "ngx-filepond": "^5.0.0",
+    "ngx-infinite-scroll": "^7.1.0",
     "ngx-toastr": "^10.0.4",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",

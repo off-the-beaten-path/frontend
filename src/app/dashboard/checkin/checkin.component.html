@@ -8,6 +8,11 @@
         #{{ checkin.geocache.location.geohash }}
       </mat-card-title>
       <mat-card-subtitle>{{ checkin.final_distance | number:'1.1-1' }} m | {{ checkin.created_at | date }}</mat-card-subtitle>
+      <button mat-icon-button
+              class="my-header-fab"
+              (click)="enterEditingMode()">
+        <mat-icon>edit</mat-icon>
+      </button>
     </mat-card-header>
 
     <app-map [config]="{checkins: [checkin], mode: 'include-checkin', center: 'checkin'}"></app-map>
@@ -28,13 +33,6 @@
       </p>
     </mat-card-content>
 
-    <mat-card-actions *ngIf="!editing"
-                      fxLayout="row" fxLayoutAlign="center">
-      <button mat-stroked-button
-              (click)="enterEditingMode()">Edit
-      </button>
-    </mat-card-actions>
-
     <mat-card-content *ngIf="editing">
       <form [formGroup]="updateForm">
         <mat-form-field style="width: 100%;">
@@ -48,10 +46,12 @@
     <mat-card-actions *ngIf="editing"
                       fxLayout="row" fxLayoutAlign="space-between">
       <button mat-stroked-button
-              (click)="updateCheckin()">Submit
+              (click)="updateCheckin()">
+        Submit
       </button>
       <button mat-stroked-button
-              (click)="exitEditingMode()">Cancel
+              (click)="exitEditingMode()">
+        Cancel
       </button>
     </mat-card-actions>
   </mat-card>
